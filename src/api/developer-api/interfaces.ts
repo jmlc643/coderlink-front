@@ -19,7 +19,7 @@ export interface CreateDeveloperRequest{
     username: string
     dni: number
     names: string
-    lastNames: string
+    lastName: string
     email: string
     password: string
     typeUser: string

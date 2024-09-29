@@ -1,33 +1,32 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgFor, NgIf } from '@angular/common';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CreateDeveloperRequest } from '../../api/developer-api/interfaces';
+import { AbstractControl, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { CreateCustomerRequest } from '../../api/customer-api/interfaces';
 import { AuthApiService } from '../../api/auth-api/auth-api.service';
 
 @Component({
-  selector: 'app-register-freelancer',
+  selector: 'app-register-c',
   standalone: true,
   imports: [NgIf, NgFor, ReactiveFormsModule],
-  templateUrl: './register-freelancer.component.html',
-  styleUrls: ['./register-freelancer.component.scss']
+  templateUrl: './register-c.component.html',
+  styleUrls: ['./register-c.component.scss']
 })
-export class RegisterFreelancerComponent {
-  
-  createDeveloperRequest: CreateDeveloperRequest = {
-    username: '',
-    dni: 4,
+export class RegisterCustomerComponent {
+
+  // Mapping DTO
+
+  createCustomerRequest: CreateCustomerRequest = {
     names: '',
     lastName: '',
+    username: '',
+    dni: 1,
     email: '',
     password: '',
-    typeUser: 'DEVELOPER',
-    portfolio: '',
-    hoursWorked: 3,
-    paymentRate: '',
-    workExperience: '',
-    yearsExperience: 5,
-    skills: []
+    typeUser: 'CUSTOMER',
+    companyName: 'empresa1',
+    ruc: 2,
+    phone: 3
   }
 
   // Variable to errors
@@ -44,7 +43,29 @@ export class RegisterFreelancerComponent {
 
   // Injection of CustomerApiService
   authApiService = inject(AuthApiService)
-  
+
+  //Validation to same passwords
+  passwordMatchValidator(control: AbstractControl): {[key: string]: boolean} | null {
+    const password = control.get('password')?.value;
+    const repeat_password = control.get('confirmPassword')?.value;
+
+    if (password !== repeat_password) {
+      control.get('confirmPassword')?.setErrors({ passwordMismatch: true });
+      return { passwordMismatch: true };
+    } else {
+      control.get('confirmPassword')?.setErrors(null);
+    }
+
+    if (password && password.length < 8) {
+      control.get('password')?.setErrors({ minlength: true });
+      return { minlength: true };
+    } else {
+      control.get('password')?.setErrors(null);
+    }
+
+    return null;
+  }
+
   // FormBuilder of Register Form
 
   registerForm = this.formBuilder.group({
@@ -52,11 +73,7 @@ export class RegisterFreelancerComponent {
     lastName: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
     password: ['',[Validators.required, Validators.minLength(8)]],
-    confirmPassword: ['', [Validators.required, Validators.minLength(8)]],
-    portfolio: ['', Validators.required],
-    paymentRate: ['', Validators.required],
-    workExperience: ['', Validators.required],
-    skills: ['', Validators.required]
+    confirmPassword: ['', [Validators.required, Validators.minLength(8)]] 
   })
 
   get firstName(){
@@ -79,38 +96,18 @@ export class RegisterFreelancerComponent {
     return this.registerForm.get('confirmPassword')
   }
 
-  get portfolio(){
-    return this.registerForm.get('portfolio')
-  }
-
-  get workExperience(){
-    return this.registerForm.get('workExperience')
-  }
-
-  get paymentRate(){
-    return this.registerForm.get('paymentRate')
-  }
-
-  get skills(){
-    return this.registerForm.get('skills')
-  }
-
   register() {
     if(this.registerForm.valid){
       // Obtain values of formGroup
       let namesControl = this.registerForm.controls.firstName.value as string
       let lastNameControl = this.registerForm.controls.lastName.value as string
-      this.createDeveloperRequest.names = namesControl
-      this.createDeveloperRequest.lastName = lastNameControl
-      this.createDeveloperRequest.username = namesControl.at(0) + lastNameControl
-      this.createDeveloperRequest.email = this.registerForm.controls.email.value as string
-      this.createDeveloperRequest.password = this.registerForm.controls.password.value as string
-      this.createDeveloperRequest.portfolio = this.registerForm.controls.portfolio.value as string
-      this.createDeveloperRequest.workExperience = this.registerForm.controls.workExperience.value as string
-      this.createDeveloperRequest.paymentRate = this.registerForm.controls.paymentRate.value as string
-      this.createDeveloperRequest.skills.push(this.registerForm.controls.skills.value as string) 
-      console.log(this.createDeveloperRequest)
-      this.authApiService.registerDeveloper(this.createDeveloperRequest).subscribe({
+      this.createCustomerRequest.names = namesControl
+      this.createCustomerRequest.lastName = lastNameControl
+      this.createCustomerRequest.username = namesControl.at(0) + lastNameControl
+      this.createCustomerRequest.email = this.registerForm.controls.email.value as string
+      this.createCustomerRequest.password = this.registerForm.controls.password.value as string 
+      console.log(this.createCustomerRequest)
+      this.authApiService.registerCustomer(this.createCustomerRequest).subscribe({
         next: (userData) => {
           console.log(userData)
         },
@@ -134,7 +131,6 @@ export class RegisterFreelancerComponent {
       this.registerForm.markAllAsTouched();
     }   
   }
-
   openGoogleAuth() {
     const googleAuthURL = 'https://accounts.google.com/v3/signin/identifier?continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&ifkv=ARpgrqfahPgL75ggfdYMLu8k27GCVDPwO9gSM48fIpyW_5eFhu9xcvJ0WFDZ_yBKLHv6FyAqHptJsg&rip=1&sacu=1&service=mail&flowName=GlifWebSignIn&flowEntry=ServiceLogin&dsh=S-1743138878%3A1727373242782840&ddm=0';
     window.open(googleAuthURL, '_blanck');

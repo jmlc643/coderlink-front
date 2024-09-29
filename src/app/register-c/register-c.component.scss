@@ -1,0 +1,134 @@
+/* Página de registro */
+.register-page {
+    height: 100vh; /* Ocupa toda la pantalla */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #6fa1a4; /* Fondo similar al login */
+  }
+  
+  .register-container {
+    background-color: white;
+    padding: 40px;
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+  
+    h2 {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      color: #333;
+    }
+  
+    .google-btn {
+      width: 100%;
+      padding: 12px;
+      background-color: #4285F4; /* Color de Google */
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+  
+      &:hover {
+        background-color: darken(#4285F4, 10%);
+      }
+    }
+  
+    .input-group {
+      text-align: left;
+      margin-bottom: 20px;
+  
+      label {
+        font-size: 0.9rem;
+        color: #333;
+        margin-bottom: 5px;
+        display: block;
+      }
+  
+      input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 1rem;
+        background-color: #f9f9f9;
+      }
+    }
+  
+    .error-message {
+      color: red;
+      font-size: 0.8rem;
+      margin-top: 5px;
+    }
+  
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+  
+      input {
+        margin-right: 10px;
+      }
+  
+      label {
+        font-size: 0.9rem;
+        color: #333;
+      }
+    }
+  
+    .register-btn {
+      width: 100%;
+      padding: 12px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+  
+      &:hover {
+        background-color: darken(#007bff, 10%);
+      }
+  
+      &:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+      }
+    }
+  
+    p {
+      margin-top: 20px;
+      font-size: 0.9rem;
+  
+      a.login-link {
+        color: #007bff;
+        text-decoration: none;
+  
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+  
+  /* Responsivo para pantallas pequeñas */
+  @media (max-width: 768px) {
+    .register-container {
+      width: 90%;
+    }
+  }
+  
+  .ng-valid:not(form).ng-touched {
+    border-left: 5px solid #42a948;
+  }
+  
+  .ng-invalid:not(form).ng-touched {
+    border-left: 5px solid #a94442;
+  }

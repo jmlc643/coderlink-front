@@ -1,0 +1,108 @@
+<div class="register-page">
+    <div class="register-container">
+        <h2>Regístrate para contratar talento</h2>
+        <button class="google-btn" (click)="openGoogleAuth()">Continuar con Google</button>
+      
+        <form [formGroup] = "registerForm" (submit)="register()">
+          <div class="input-group">
+            <label for="firstName">Nombre</label>
+            <input formControlName = "firstName" type="text" id="firstName" placeholder="Nombre" name="firstName" required/>
+            <div *ngIf="firstName?.invalid && (firstName?.dirty || firstName?.touched)" class="text-danger">
+              <div *ngIf="firstName?.errors?.['required']">
+                El nombre es requerido
+              </div>
+            </div>
+          </div>
+      
+          <div class="input-group">
+            <label for="lastName">Apellido</label>
+            <input formControlName="lastName" type="text" id="lastName" placeholder="Apellido" name="lastName" required />
+            <div *ngIf="lastName?.invalid && (lastName?.dirty || lastName?.touched)" class="text-danger">
+              <div *ngIf="lastName?.errors?.['required']">
+                El apellido es requerido
+              </div>
+            </div>
+          </div>
+      
+          <div class="input-group">
+            <label for="email">Dirección de correo electrónico</label>
+            <input
+              formControlName = "email"
+              type="email"
+              id="email"
+              placeholder="Dirección de correo electrónico"
+              name="email"
+              required
+              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+            />
+            <div *ngIf="email?.invalid && (email?.dirty || email?.touched)" class="text-danger">
+              <div *ngIf="email?.errors?.['required']">
+                El email es requerido
+              </div>
+              <div *ngIf="email?.errors?.['email']">
+                Formato invalido
+              </div>
+            </div>
+          </div>
+      
+          <div class="input-group">
+            <label for="password">Contraseña</label>
+            <input
+              formControlName="password"
+              type="password"
+              id="password"
+              placeholder="Contraseña"
+              name="password"
+              required
+            />
+            <div *ngIf="password?.invalid && (password?.dirty || password?.touched)" class="text-danger">
+              <div *ngIf="password?.errors?.['required']">
+                La contraseña es requerida
+              </div>
+              <div *ngIf="password?.errors?.['minlength']">
+                El tamaño mínimo es de 8 caracteres
+              </div>
+            </div>
+          </div>
+      
+          <div class="input-group">
+            <label for="confirmPassword">Confirmar Contraseña</label>
+            <input
+              formControlName = "confirmPassword"
+              type="password"
+              id="confirmPassword"
+              placeholder="Confirmar contraseña"
+              name="confirmPassword"
+              required
+            />
+            <div *ngIf="confirmPassword?.invalid && (confirmPassword?.dirty || confirmPassword?.touched)" class="text-danger">
+              <div *ngIf="confirmPassword?.errors?.['required']">
+                La contraseña es requerida
+              </div>
+              <div *ngIf="confirmPassword?.errors?.['minlength']">
+                El tamaño mínimo es de 8 caracteres
+              </div>
+            </div>
+          </div>
+      
+          <div class="checkbox-group">
+            <input type="checkbox" id="terms" required />
+            <label for="terms">Sí, comprendo y acepto los Términos de servicio y la Política de privacidad.</label>
+          </div>
+    
+          <div *ngIf="formError != ''">
+            <p class="text-danger text-xs italic">{{formError}}</p>
+          </div>
+      
+          <button
+            type="submit"
+            class="register-btn"
+            [disabled]="registerForm.invalid"
+          >
+            Registrarse
+          </button>
+      
+          <p>¿Ya tienes una cuenta? <a href="#" class="login-link">Inicia sesión aquí</a></p>
+        </form>
+      </div>
+    </div>

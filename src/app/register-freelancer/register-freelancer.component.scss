@@ -133,3 +133,11 @@
 html, body {
   overflow-y: auto; /* Permite que el cuerpo haga scroll si el contenido es mayor */
 }
+
+.ng-valid:not(form).ng-touched {
+  border-left: 5px solid #42a948;
+}
+
+.ng-invalid:not(form).ng-touched {
+  border-left: 5px solid #a94442;
+}

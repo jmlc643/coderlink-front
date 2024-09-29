@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 import { PrincipalComponent } from './principal/principal.component';
 import { JoinSelectionComponent } from './join-selection/join-selection.component';
-import { RegisterCustomerComponent } from './register-customer/register-customer.component';
 import { RegisterFreelancerComponent } from './register-freelancer/register-freelancer.component';
 import { LoginComponent } from './login/login.component';
 import { FreelancerSectionComponent } from './freelancer-section/freelancer-section.component';
@@ -17,6 +16,7 @@ import { CrearProyectoComponent } from './crear-proyecto/crear-proyecto.componen
 import { ModifyProjectComponent } from './modify-project/modify-project.component';
 import { ViewProjectComponent } from './view-project/view-project.component';
 import { HireDeveloperComponent } from './hire-developer/hire-developer.component';
+import { RegisterCustomerComponent } from './register-c/register-c.component';
 
 
 export const routes: Routes = [
