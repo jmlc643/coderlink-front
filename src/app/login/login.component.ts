@@ -59,6 +59,8 @@ export class LoginComponent {
   login() {
     if(this.loginForm.valid){
       this.loginError="";
+      this.authRequest.username = this.loginForm.controls.username.value as string
+      this.authRequest.password = this.loginForm.controls.password.value as string
       console.log("Llamando al servicio de autenticar sesion "+this.loginForm);
       this.authApiService.login(this.authRequest).subscribe({
         next: (userData) => {

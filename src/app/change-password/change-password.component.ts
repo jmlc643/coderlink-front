@@ -56,6 +56,8 @@ export class ChangePasswordComponent implements OnInit{
 
   resetPass(){
     if(this.resetPassForm.valid){
+      this.changePassword.password = this.resetPassForm.controls.password.value as string
+      this.changePassword.confirmationPassword = this.resetPassForm.controls.passwordR.value as string
       this.authApiService.resetPass(this.changePassword).subscribe({
         next: (userData) => {
           console.log(userData)
