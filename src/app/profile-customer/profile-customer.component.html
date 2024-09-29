@@ -7,8 +7,7 @@
         <img src="assets/profile-placeholder.png" alt="Profile Picture">
       </div>
       <div class="profile-info">
-        <h2>{{ customer.name }}</h2>
-        <p class="customer-description">{{ customer.description }}</p>
+        <h2>{{ customer?.names }}</h2>
         <button class="edit-profile-btn" (click)="editProfile()">Editar Perfil</button>
       </div>
     </div>
@@ -17,10 +16,10 @@
       <h3>Proyectos Publicados</h3>
       <button class="create-project-btn" (click)="createProject()">Crear Proyecto</button>
       <ul class="projects-list">
-        <li *ngFor="let project of customer.projects">
-          <h4>{{ project.title }}</h4>
-          <p>{{ project.description }}</p>
-          <button class="view-project-btn" (click)="viewProject(project.id)">Ver Proyecto</button>
+        <li *ngFor="let project of customer?.projects">
+          <h4>{{ project?.name }}</h4>
+          <p>{{ project?.description }}</p>
+          <button class="view-project-btn" (click)="viewProject(project.idProject)">Ver Proyecto</button>
         </li>
       </ul>
     </div>

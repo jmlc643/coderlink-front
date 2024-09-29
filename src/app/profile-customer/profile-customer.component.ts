@@ -1,6 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForOf,NgIf } from '@angular/common';
+import { CustomerApiService } from '../../api/customer-api/customer-api.service';
+import { Customer } from '../../api/customer-api/interfaces';
+import { AuthApiService } from '../../api/auth-api/auth-api.service';
+import { GetUserResponse } from '../../api/auth-api/interfaces';
 
 
 @Component({
@@ -10,25 +14,28 @@ import { NgForOf,NgIf } from '@angular/common';
   templateUrl: './profile-customer.component.html',
   styleUrls: ['./profile-customer.component.scss']
 })
-export class ProfileCustomerComponent {
-  customer = {
-    name: 'John Doe',
-    description: 'Desarrollador y cliente de software buscando talentos.',
-    projects: [
-      {
-        id: 1,
-        title: 'Desarrollo de sitio web',
-        description: 'Buscando un freelancer para desarrollar un sitio web moderno.'
-      },
-      {
-        id: 2,
-        title: 'Aplicación móvil',
-        description: 'Necesito un desarrollador para crear una aplicación móvil nativa.'
-      }
-    ]
-  };
+export class ProfileCustomerComponent implements OnInit{
+
+  customerApiService = inject(CustomerApiService)
+  authApiService = inject(AuthApiService)
+
+  customer?:Customer
+  token: string = ""
+  username: GetUserResponse = {
+    username : ''
+  }
 
   constructor(private router: Router) {}
+  ngOnInit(): void {
+    this.token = this.authApiService.userToken
+    this.loadData()
+  }
+
+  private async loadData(){
+    this.username = await this.authApiService.getUserByToken(this.token)
+    this.customer = await this.customerApiService.getCustomer(this.username.username)
+    console.log(this.customer)
+  }
 
   goToHome() {
     this.router.navigate(['/']); // Cambia '/home' a la ruta de la página principal en tu proyecto

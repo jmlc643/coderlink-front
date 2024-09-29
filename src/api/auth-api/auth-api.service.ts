@@ -1,10 +1,10 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, map, Observable, tap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, lastValueFrom, map, Observable, tap, throwError } from 'rxjs';
 import { CreateCustomerRequest, Customer } from '../customer-api/interfaces';
 import { environment } from '../../environments/environment.development';
 import { CreateDeveloperRequest } from '../developer-api/interfaces';
-import { AuthenticationUserRequest, ChangePasswordRequest, RecoveryPasswordRequest } from './interfaces';
+import { AuthenticationUserRequest, ChangePasswordRequest, GetUserResponse, RecoveryPasswordRequest } from './interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -75,8 +75,12 @@ export class AuthApiService {
   }
 
   resetPass(changePassword: ChangePasswordRequest):Observable<any>{
-    return this.httpClient.patch<any>(environment.urlBack+'/autenticacion/change-pass/',changePassword).pipe(
+    return this.httpClient.post<any>(environment.urlBack+'/auth/change-pass/',changePassword).pipe(
       catchError(this.handleError)
     );
+  }
+
+  getUserByToken(token: string){
+    return lastValueFrom(this.httpClient.post<GetUserResponse>(environment.urlBack+'/auth/get-user-token/',token))
   }
 }

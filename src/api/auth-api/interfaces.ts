@@ -27,3 +27,7 @@ export interface RecoveryPasswordRequest{
 export interface RecoveryPasswordResponse{
     message: string
 }
+
+export interface GetUserResponse{
+    username: string
+}
