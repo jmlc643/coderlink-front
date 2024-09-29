@@ -12,6 +12,13 @@
       <p><strong>Categoría:</strong> {{ project?.category }}</p>
       <p><strong>Calificación:</strong> {{ project?.qualification }}</p>
     </div>
+
+    <h2>Postulaciones</h2>
+    <div *ngFor = "let postulation of project?.postulations">
+      <p><strong>ID de la postulación:</strong> {{ postulation.id }}</p>
+      <p><strong>Nombre del Developer:</strong> {{ postulation.devName }}</p>
+      <button class="edit-btn" (click)="hireDev(postulation.id)">Ofrecer Contrato</button>
+    </div>
     
     <div class="project-actions">
       <button class="edit-btn" (click)="editProject()">Modificar</button>

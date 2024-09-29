@@ -2,11 +2,12 @@ import { Component, inject, Input, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router'; // Importar Router
 import { ProjectApiService } from '../../api/project-api/project-api.service';
 import { Project } from '../../api/project-api/interfaces';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-view-project',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './view-project.component.html',
   styleUrls: ['./view-project.component.scss']
 })
@@ -50,6 +51,10 @@ export class ViewProjectComponent implements OnInit{
 
   private async loadData(){
     this.project = await this.projectApiService.getProject(this.idd)
+  }
+
+  hireDev(id: number){
+    this.router.navigateByUrl('/hire-developer/'+id)
   }
 }
 

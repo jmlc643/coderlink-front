@@ -37,5 +37,5 @@ export const routes: Routes = [
   { path: 'crear-proyecto', component: CrearProyectoComponent},
   { path: 'modify-project', component: ModifyProjectComponent},
   { path: 'view-project/:id', component: ViewProjectComponent},
-  { path: 'hire-developer', component: HireDeveloperComponent},
+  { path: 'hire-developer/:id', component: HireDeveloperComponent},
 ];

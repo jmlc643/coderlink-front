@@ -44,7 +44,7 @@
         <div class="job-card" *ngFor="let project of projects">
           <h3>{{ project.name }}</h3>
           <p>{{ project.description }}</p>
-          <button>Postularse</button>
+          <button (click)="postulation(project.id)">Postularse</button>
         </div>
       </section>
     </div>

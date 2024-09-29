@@ -8,22 +8,10 @@
     <form [formGroup]="hireForm" (ngSubmit)="onSubmit()">
       <div>
         <label for="developerId">Seleccionar Desarrollador:</label>
-        <select id="developerId" formControlName="developerId" (change)="onSelectDeveloper($event)">
-          <option value="" disabled selected>Seleccione un desarrollador</option>
-          <option *ngFor="let developer of developers" [value]="developer.id">
-            {{ developer.name }} - {{ developer.yearsExperience }} años de experiencia
-          </option>
-        </select>
+        <input type="text" [value]="postulation?.devName" disabled>
         <div *ngIf="hireForm.get('developerId')?.invalid && hireForm.get('developerId')?.touched">
           <small class="error">Debe seleccionar un desarrollador.</small>
         </div>
-      </div>
-  
-      <div *ngIf="selectedDeveloper">
-        <h3>Detalles del Desarrollador Seleccionado:</h3>
-        <p><strong>Nombre:</strong> {{ selectedDeveloper.name }}</p>
-        <p><strong>Experiencia:</strong> {{ selectedDeveloper.yearsExperience }} años</p>
-        <p><strong>Portafolio:</strong> <a [href]="selectedDeveloper.portfolio" target="_blank">{{ selectedDeveloper.portfolio }}</a></p>
       </div>
   
       <div>
@@ -36,7 +24,7 @@
   
       <div>
         <label for="paymentRate">Tarifa de Pago:</label>
-        <input type="text" id="paymentRate" formControlName="paymentRate" placeholder="Ingrese la tarifa de pago" />
+        <input type="number" id="paymentRate" formControlName="paymentRate" placeholder="Ingrese la tarifa de pago" />
         <div *ngIf="hireForm.get('paymentRate')?.invalid && hireForm.get('paymentRate')?.touched">
           <small class="error">La tarifa de pago es requerida.</small>
         </div>
