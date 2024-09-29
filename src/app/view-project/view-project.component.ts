@@ -1,8 +1,9 @@
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router'; // Importar Router
 import { ProjectApiService } from '../../api/project-api/project-api.service';
 import { Project } from '../../api/project-api/interfaces';
 import { CommonModule } from '@angular/common';
+import { Postulation } from '../../api/postulation-api/interfaces';
 
 @Component({
   selector: 'app-view-project',
@@ -19,6 +20,8 @@ export class ViewProjectComponent implements OnInit{
   activatedRouter = inject(ActivatedRoute)
   idd = 0
   projectApiService = inject(ProjectApiService)
+  devName = ''
+  postulations : Postulation[] = []
 
   goBack() {
     this.router.navigate(['/profile-customer']); // Cambia '/projects' por la ruta a la que quieras redirigir
@@ -47,10 +50,15 @@ export class ViewProjectComponent implements OnInit{
       this.idd = +this.activatedRouter.snapshot.params['id'];
     })
     this.loadData()
-  }
+}
 
   private async loadData(){
     this.project = await this.projectApiService.getProject(this.idd)
+    const filteredPostulations = this.project?.postulations.filter(postulation => postulation.status !== 'SENDED');
+    if (filteredPostulations && filteredPostulations.length > 0) {
+      // Asigna el nombre del desarrollador de la primera postulación que cumple la condición a 'devName'
+      this.devName = filteredPostulations[0].devName;
+    }
   }
 
   hireDev(id: number){

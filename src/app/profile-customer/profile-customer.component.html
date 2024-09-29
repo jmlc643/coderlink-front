@@ -19,6 +19,8 @@
         <li *ngFor="let project of customer?.projects">
           <h4>{{ project?.name }}</h4>
           <p>{{ project?.description }}</p>
+          <p><strong>Status: </strong>{{project?.status}}</p>
+          <span *ngIf=""></span>
           <button class="view-project-btn" (click)="viewProject(project.id)" >Ver Proyecto</button>
         </li>
       </ul>

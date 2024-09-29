@@ -7,6 +7,7 @@ import { PostulationApiService } from '../../api/postulation-api/postulation-api
 import { CreateJobOfferRequest } from '../../api/offer-api/interfaces';
 import { AuthApiService } from '../../api/auth-api/auth-api.service';
 import { GetUserResponse } from '../../api/auth-api/interfaces';
+import { OfferApiService } from '../../api/offer-api/offer-api.service';
 @Component({
   selector: 'app-hire-developer',
   standalone: true,
@@ -21,11 +22,12 @@ export class HireDeveloperComponent implements OnInit {
   activatedRouter = inject(ActivatedRoute)
   postulation?: Postulation
   postulationApiService = inject(PostulationApiService)
+  offerApiService = inject(OfferApiService)
   authApiService = inject(AuthApiService)
   createoffer: CreateJobOfferRequest ={
-    message: '',
+    message: 'Quiero trabajar contigo',
     budget: 0,
-    duration: '',
+    duration: 'Al menos 1 mes',
     customerUsername: '',
     postulationId: 0
   }
@@ -57,14 +59,17 @@ export class HireDeveloperComponent implements OnInit {
 
   private async loadData(){
     this.postulation = await this.postulationApiService.getPostulation(this.idd)
-    
+    this.token = this.authApiService.userToken
+    this.username = await this.authApiService.getUserByToken(this.token)
   }
 
   onSubmit(): void {
     if (this.hireForm.valid) {
       this.createoffer.postulationId = this.idd
-      this.createoffer.budget = Number(this.paymentRate) || 0
+      this.createoffer.budget = Number(this.hireForm.controls.paymentRate.value) || 0
       this.createoffer.customerUsername = this.username.username
+      this.offerApiService.createOffer(this.createoffer)
+      this.router.navigateByUrl('profile-customer')
     }
   }
   goBack() {
