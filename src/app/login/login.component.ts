@@ -1,37 +1,84 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgFor,NgIf } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { AuthenticationUserRequest } from '../../api/auth-api/interfaces';
+import { AuthApiService } from '../../api/auth-api/auth-api.service';
 
 @Component({
   selector: 'app-login',
   standalone:true,
-  imports: [NgIf,NgFor,FormsModule,RouterModule],
+  imports: [NgIf,NgFor,ReactiveFormsModule,RouterModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-  user = {
-    email: '',
+
+  authRequest: AuthenticationUserRequest = {
+    username: '',
     password: ''
-  };
+  }
+
+  // Variable to errors
+
+  loginError = ""
+
+  // Injection of FormBuilder to Validations
+
+  formBuilder = inject(FormBuilder)
+
+  // Injection of Router
+
+  router = inject(Router)
+
+  // Injection of CustomerApiService
+  authApiService = inject(AuthApiService)
+
+  // FormBuilder of LoginForm
+
+  loginForm = this.formBuilder.group({
+    username: ['', Validators.required],
+    password: ['', Validators.required]
+  })
+
+  get username(){
+    return this.loginForm.get('username')
+  }
+
+  get password(){
+    return this.loginForm.get('password')
+  }
 
   isLoading = false;
-
-  constructor(private router: Router) {}
 
   goBack(){
     this.router.navigate(['/']);
   }
 
   login() {
-    
-    // Lógica para manejar el inicio de sesión
-    console.log('Iniciando sesión con:', this.user);
-    this.router.navigate(['/profile-customer']); // Redirige a la página del perfil del cliente
-
-   // console.log('Iniciando sesion con:', this.user);
-    //this.router.navigate(['/profile-freelancer']); // Redirige a la pagina del perfil del desarrollador
+    if(this.loginForm.valid){
+      this.loginError="";
+      console.log("Llamando al servicio de autenticar sesion "+this.loginForm);
+      this.authApiService.login(this.authRequest).subscribe({
+        next: (userData) => {
+          console.log(userData)
+        },
+        error : (errorData: any) => {
+          console.error(errorData);
+          this.loginError="Credenciales invalidas";
+        },
+        complete: () => {
+          console.info("Login completo")
+          this.router.navigateByUrl('/profile-customer').then(() => {
+            window.location.reload();
+          });
+          this.loginForm.reset();
+        }
+      });
+    }else{
+      this.loginForm.markAllAsTouched();
+      alert("Error de ingreso de datos")
+    }
   }
 }
