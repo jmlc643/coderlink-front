@@ -4,8 +4,8 @@
         <h1>CoderLink</h1>
       </div>
       <div class="search-bar">
-        <input type="text" placeholder="Buscar trabajos..." />
-        <button>Buscar</button>
+        <input name="text" type="text" placeholder="Buscar trabajos..."  [(ngModel)] = "projectName"/>
+        <button (click)="search()">Buscar</button>
       </div>
       <nav class="nav-links">
         <a href="/">Inicio</a>
@@ -41,14 +41,10 @@
       </aside>
 
       <section class="jobs-listing">
-        <div class="job-card" *ngFor="let job of jobs">
-          <h3>{{ job.title }}</h3>
-          <p>{{ job.description }}</p>
-          <div class="job-details">
-            <span>Precio: {{ job.price | currency }}</span>
-            <span>Ubicación: {{ job.location }}</span>
-          </div>
-          <button (click)="viewJobDetails(job.id)">Ver Detalles</button>
+        <div class="job-card" *ngFor="let project of projects">
+          <h3>{{ project.name }}</h3>
+          <p>{{ project.description }}</p>
+          <button>Postularse</button>
         </div>
       </section>
     </div>

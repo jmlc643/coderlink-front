@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { catchError, lastValueFrom, Observable } from 'rxjs';
-import { CreateProjectRequest, Project } from './interfaces';
+import { CreateProjectRequest, Project, SearchProjectRequest } from './interfaces';
 import { environment } from '../../environments/environment.development';
 
 @Injectable({
@@ -25,5 +25,9 @@ export class ProjectApiService {
 
   deleteProject(id: number): void{
     lastValueFrom(this.httpClient.delete<Project[]>(environment.urlBack + '/project/delete/'+id))
+  }
+
+  searchProject(projectName: SearchProjectRequest){
+    return lastValueFrom(this.httpClient.post<Project[]>(environment.urlBack + '/project/search/', projectName))
   }
 }

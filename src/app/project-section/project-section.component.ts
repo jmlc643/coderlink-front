@@ -1,40 +1,36 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { NgFor,NgIf } from '@angular/common';
 import { CommonModule } from '@angular/common';
+import { Project, SearchProjectRequest } from '../../api/project-api/interfaces';
+import { ProjectApiService } from '../../api/project-api/project-api.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-project-section',
   standalone: true,
-  imports: [NgFor, NgIf, CommonModule],
+  imports: [NgFor, NgIf, CommonModule, FormsModule],
   templateUrl: './project-section.component.html',
   styleUrl: './project-section.component.scss'
 })
-export class ProjectSectionComponent {
-  jobs = [
-    {
-      id: 1,
-      title: 'Desarrollo de Sitio Web',
-      description: 'Busco un desarrollador web para crear un sitio de comercio electrónico.',
-      price: 500,
-      location: 'Remoto'
-    },
-    {
-      id: 2,
-      title: 'Diseño Gráfico',
-      description: 'Necesito un diseñador gráfico para un proyecto de marca.',
-      price: 300,
-      location: 'Lima, Perú'
-    },
-    {
-      id: 3,
-      title: 'Redacción de Contenido',
-      description: 'Busco un redactor para crear contenido para mi blog.',
-      price: 150,
-      location: 'Remoto'
-    }
-  ];
+export class ProjectSectionComponent implements OnInit{
+  projectApiService = inject(ProjectApiService)
+  projectName: string = ''
+  searchRequest: SearchProjectRequest = {
+    projectName : ''
+  }
+  
+  ngOnInit(): void {
+    this.loadData()
+  }
+  projects: Project[] = []
 
-  viewJobDetails(jobId: number) {
-    console.log('Ver detalles del trabajo:', jobId);
+  private async loadData(){
+    this.projects = await this.projectApiService.getProjects()
+  }
+
+  async search(){
+    this.searchRequest.projectName = this.projectName
+    this.projects = await this.projectApiService.searchProject(this.searchRequest)
+    console.log(this.projects)
   }
 }

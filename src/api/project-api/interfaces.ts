@@ -28,3 +28,7 @@ export interface CreateProjectRequest{
     username: string;
     skills: Skill[];
 }
+
+export interface SearchProjectRequest{
+    projectName: string
+}
