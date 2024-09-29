@@ -2,12 +2,16 @@ import { mergeApplicationConfig, ApplicationConfig, importProvidersFrom } from '
 import { provideServerRendering } from '@angular/platform-server';
 import { appConfig } from './app.config';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { JwtApiService } from '../api/customer-api/customer-jwt/jwt-api.service';
+import { CorsInterceptorService } from '../api/cors-interceptor/cors-interceptor.service';
+import { ErrorInterceptorService } from '../api/error-interceptor/error-interceptor.service';
 
 const serverConfig: ApplicationConfig = {
   providers: [
     provideServerRendering(),
-    //{provide:HTTP_INTERCEPTORS,useClass:JwtApiService,multi:true},
-    //{provide:HTTP_INTERCEPTORS,useClass:ErrorInterceptorApiService, multi:true}
+    {provide:HTTP_INTERCEPTORS,useClass:JwtApiService,multi:true},
+    {provide:HTTP_INTERCEPTORS,useClass:CorsInterceptorService, multi:true},
+    {provide:HTTP_INTERCEPTORS,useClass:ErrorInterceptorService, multi:true}
   ]
 };
 

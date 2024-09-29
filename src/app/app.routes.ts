@@ -30,7 +30,7 @@ export const routes: Routes = [
   { path: 'profile-customer', component: ProfileCustomerComponent },
   { path: 'forgot', component: ForgotComponent},
   { path: 'project-section', component: ProjectSectionComponent},
-  { path: 'change-password', component: ChangePasswordComponent},
+  { path: 'change-password/:token', component: ChangePasswordComponent},
   { path: 'profile-freelancer-vista-c', component: ProfileFreelancerVistaCComponent},
   { path: 'profile-customer-vista-d', component: ProfileCustomerVistaDComponent},
   { path: 'edit-profile-customer', component: EditProfileCustomerComponent},
