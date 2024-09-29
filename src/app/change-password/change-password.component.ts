@@ -1,42 +1,87 @@
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Component, inject, OnInit } from '@angular/core';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgIf } from '@angular/common';
+import { AuthApiService } from '../../api/auth-api/auth-api.service';
+import { ChangePasswordRequest } from '../../api/auth-api/interfaces';
 @Component({
   selector: 'app-change-password',
   standalone: true,
-  imports: [FormsModule, NgIf],
+  imports: [ReactiveFormsModule, NgIf],
   templateUrl: './change-password.component.html',
   styleUrl: './change-password.component.scss'
 })
-export class ChangePasswordComponent {
-  currentPassword: string = '';
-  newPassword: string = '';
-  confirmPassword: string = '';
-  message: string = '';
-  
-      constructor(private router: Router) {}
+export class ChangePasswordComponent implements OnInit{
+  //Se muestra si hay algun error
+  formError:String="";
 
-      cambiarContrasena(event: Event): void {
-         event.preventDefault();
+  //Inyeccion Servicios
+  authApiService = inject(AuthApiService);
 
-    // Validar si la nueva contraseña cumple con los requisitos
-    if (this.newPassword.length >= 6 && this.newPassword === this.confirmPassword) {
-      // Simulamos la lógica de cambio de contraseña
-      // Mostramos la alerta de éxito
-      window.alert('Contraseña cambiada con éxito');
-      
-      // Redirigir a la página de edición del perfil
-      this.router.navigate(['/edit-profile-customer']);
-    } else {
-      // Mostrar mensajes de error en la pantalla
-      if (this.newPassword.length < 6) {
-        this.message = 'La nueva contraseña debe tener al menos 6 caracteres.';
-      } else if (this.newPassword !== this.confirmPassword) {
-        this.message = 'Las contraseñas no coinciden.';
-      }
+  //Validaciones del formulario
+  formBuilder = inject(FormBuilder)
+
+  //Inyeccion routers
+  router = inject(Router)
+  activatedRoute = inject(ActivatedRoute);
+
+  //Validaciones de angular
+  resetPassForm = this.formBuilder.group({
+    password: ['', [Validators.required, Validators.minLength(8)]],
+    passwordR: ['', [Validators.required, Validators.minLength(8)]]
+  });
+
+  changePassword : ChangePasswordRequest = {
+    password: '',
+    confirmationPassword: '',
+    token: ''
+  }
+
+  ngOnInit(): void {
+    //Recibe el parametro del id enrutado y lo guarda en una variable
+    this.activatedRoute.params.subscribe( prm => {
+      console.log(`El token es: ${prm['token']}`);
+      this.changePassword.token = this.activatedRoute.snapshot.params['token'];
+    })
+  }
+
+  //Para acceder mas facil a los control name
+  get password() {
+    return this.resetPassForm.get('password');
+  }
+
+  get passwordR() {
+    return this.resetPassForm.get('passwordR');
+  }
+
+  resetPass(){
+    if(this.resetPassForm.valid){
+      this.authApiService.resetPass(this.changePassword).subscribe({
+        next: (userData) => {
+          console.log(userData)
+        },
+        error : (errorData: any) => {
+          console.error(errorData);
+          if (errorData && errorData.error && errorData.error.message) {
+            // Si el error tiene un mensaje, puedes mostrarlo
+            this.formError = errorData.error.message;
+          } else {
+            // Si no hay un mensaje específico, muestra un mensaje genérico
+            this.formError = 'Error al procesar la solicitud';
+          }
+        },
+        complete: () => {
+          console.info("Register completo")
+          this.router.navigateByUrl('/login');
+          this.resetPassForm.reset();
+        }
+      });
+    }else{
+      this.resetPassForm.markAllAsTouched();
+      alert("Error de ingreso de datos")
     }
   }
+
   goBack() {
     this.router.navigate(['/edit-profile-customer']); // Redirige a la página principal
   }

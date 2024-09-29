@@ -4,7 +4,7 @@ import { BehaviorSubject, catchError, map, Observable, tap, throwError } from 'r
 import { CreateCustomerRequest, Customer } from '../customer-api/interfaces';
 import { environment } from '../../environments/environment.development';
 import { CreateDeveloperRequest } from '../developer-api/interfaces';
-import { AuthenticationUserRequest } from './interfaces';
+import { AuthenticationUserRequest, ChangePasswordRequest, RecoveryPasswordRequest } from './interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -66,5 +66,17 @@ export class AuthApiService {
   logout(){
     sessionStorage.removeItem("token");
     this.currentUserLoginOn.next(false);
+  }
+
+  recoveryPassword(recoveryPassword: RecoveryPasswordRequest):Observable<any>{
+    return this.httpClient.post<any>(environment.urlBack + '/auth/recovery-password/', recoveryPassword).pipe(
+      catchError(this.handleError)
+    )
+  }
+
+  resetPass(changePassword: ChangePasswordRequest):Observable<any>{
+    return this.httpClient.patch<any>(environment.urlBack+'/autenticacion/change-pass/',changePassword).pipe(
+      catchError(this.handleError)
+    );
   }
 }

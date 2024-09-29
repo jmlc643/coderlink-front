@@ -1,22 +1,31 @@
 <div class="forgot-page">
 <div class="forgot-container">
     <h2>Restablecer Contraseña</h2>
-    <form (ngSubmit)="resetPassword()" #forgotForm="ngForm">
+    <form (ngSubmit)="resetPassword()" [formGroup]="recoveryPasswordForm">
       <label for="email">Correo Electrónico</label>
-      <input type="email" 
+      <input type="email"
+      formControlName = "email" 
              id="email" 
              placeholder="Ingresa tu correo electrónico" 
-             [(ngModel)]="email" 
              name="email" 
              required 
              email 
-             #emailInput="ngModel">
-      
-      <div *ngIf="emailInput.invalid && emailInput.touched" class="error-message">
-        Ingresa un correo electrónico válido.
-      </div>
+             >
+
+             <div *ngIf="email.invalid && (email.dirty || email.touched)" class="text-danger">
+              <div *ngIf="email.errors?.['required']">
+                El email es requerido
+              </div>
+              <div *ngIf="email.errors?.['email']">
+                Formato invalido
+              </div>
+            </div>
+
+            <div *ngIf="formError != ''">
+              <p class="text-danger text-xs italic">{{formError}}</p>
+            </div>
   
-      <button type="submit" [disabled]="forgotForm.invalid">Enviar</button>
+      <button type="submit" [disabled]="recoveryPasswordForm.invalid">Enviar</button>
     </form>
   
     <p class="back-to-login"><a [routerLink]="'/login'">Volver a iniciar sesión</a></p>
