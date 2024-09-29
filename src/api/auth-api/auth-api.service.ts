@@ -75,7 +75,7 @@ export class AuthApiService {
   }
 
   resetPass(changePassword: ChangePasswordRequest):Observable<any>{
-    return this.httpClient.post<any>(environment.urlBack+'/auth/change-pass/',changePassword).pipe(
+    return this.httpClient.post<any>(environment.urlBack+'/auth/change-password/',changePassword).pipe(
       catchError(this.handleError)
     );
   }
