@@ -101,6 +101,7 @@ export class CrearProyectoComponent implements OnInit{
       this.createProjectRequest.revision = this.proyectoForm.controls.revision.value as string
       this.createProjectRequest.qualification = this.proyectoForm.controls.calificacion.value as string
       this.createProjectRequest.category = this.proyectoForm.controls.categoria.value as string
+      this.createProjectRequest.username = this.username.username
         this.projectApiService.createProject(this.createProjectRequest).subscribe({
           next: (projectData) => {
             console.log(projectData)

@@ -45,6 +45,6 @@ export class CustomerApiService {
   }
 
   getCustomer(username: string){
-    return lastValueFrom(this.httpClient.get<Customer>(environment.urlBack+'/get-customer/'+username))
+    return lastValueFrom(this.httpClient.get<Customer>(environment.urlBack+'/customer/get-customer/'+username))
   }
 }
