@@ -36,6 +36,6 @@ export const routes: Routes = [
   { path: 'edit-profile-customer', component: EditProfileCustomerComponent},
   { path: 'crear-proyecto', component: CrearProyectoComponent},
   { path: 'modify-project', component: ModifyProjectComponent},
-  { path: 'view-project', component: ViewProjectComponent},
+  { path: 'view-project/:id', component: ViewProjectComponent},
   { path: 'hire-developer', component: HireDeveloperComponent},
 ];

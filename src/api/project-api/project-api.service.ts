@@ -18,4 +18,12 @@ export class ProjectApiService {
   createProject(project: CreateProjectRequest):Observable<Project>{
     return this.httpClient.post<Project>(environment.urlBack + '/project/create/',project)
   }
+
+  getProject(id: number){
+    return lastValueFrom(this.httpClient.get<Project>(environment.urlBack+"/project/get-project/"+id))
+  }
+
+  deleteProject(id: number): void{
+    lastValueFrom(this.httpClient.delete<Project[]>(environment.urlBack + '/project/delete/'+id))
+  }
 }

@@ -4,14 +4,13 @@
     <h2>Detalles del Proyecto</h2>
     
     <div class="project-info">
-      <h3>{{ project.title }}</h3>
-      <p><strong>Nombre del Proyecto:</strong> {{ project.name }}</p>
-      <p><strong>Descripción:</strong> {{ project.description }}</p>
-      <p><strong>Presentación:</strong> {{ project.presentation }}</p>
-      <p><strong>Estado:</strong> {{ project.status }}</p>
-      <p><strong>Revisión:</strong> {{ project.revision }}</p>
-      <p><strong>Categoría:</strong> {{ project.category }}</p>
-      <p><strong>Calificación:</strong> {{ project.rating }}</p>
+      <p><strong>Nombre del Proyecto:</strong> {{ project?.name }}</p>
+      <p><strong>Descripción:</strong> {{ project?.description }}</p>
+      <p><strong>Presentación:</strong> {{ project?.presentation }}</p>
+      <p><strong>Estado:</strong> {{ project?.status }}</p>
+      <p><strong>Revisión:</strong> {{ project?.revision }}</p>
+      <p><strong>Categoría:</strong> {{ project?.category }}</p>
+      <p><strong>Calificación:</strong> {{ project?.qualification }}</p>
     </div>
     
     <div class="project-actions">

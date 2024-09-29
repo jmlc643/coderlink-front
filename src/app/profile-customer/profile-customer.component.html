@@ -19,7 +19,7 @@
         <li *ngFor="let project of customer?.projects">
           <h4>{{ project?.name }}</h4>
           <p>{{ project?.description }}</p>
-          <button class="view-project-btn" (click)="viewProject(project.idProject)">Ver Proyecto</button>
+          <button class="view-project-btn" (click)="viewProject(project.id)" >Ver Proyecto</button>
         </li>
       </ul>
     </div>

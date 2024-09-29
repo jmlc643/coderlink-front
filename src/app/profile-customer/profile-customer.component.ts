@@ -51,9 +51,9 @@ export class ProfileCustomerComponent implements OnInit{
     this.router.navigate(['/crear-proyecto']);
   }
 
-  viewProject(projectId: number) {
+  viewProject(id: number) {
     // Lógica para ver el proyecto
-    console.log(`Viendo el proyecto con ID: ${projectId}`);
-    this.router.navigate(['/view-project'])
+    console.log(`Viendo el proyecto con ID: ${id}`);
+    this.router.navigate(['/view-project/'+id as string])
   }
 }

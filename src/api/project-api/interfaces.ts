@@ -2,7 +2,7 @@ import { Postulation } from "../postulation-api/interfaces";
 import { Skill } from "../skill-api/interfaces";
 
 export interface Project{
-    idProject: number
+    id: number
     name: string;
     description: string;
     milestones: string;
