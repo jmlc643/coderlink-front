@@ -4,7 +4,7 @@ import { BehaviorSubject, catchError, lastValueFrom, map, Observable, tap, throw
 import { CreateCustomerRequest, Customer } from '../customer-api/interfaces';
 import { environment } from '../../environments/environment.development';
 import { CreateDeveloperRequest } from '../developer-api/interfaces';
-import { AuthenticationUserRequest, ChangePasswordRequest, GetUserResponse, RecoveryPasswordRequest } from './interfaces';
+import { AuthenticationUserRequest, ChangePasswordRequest, GetAuthorites, GetUserResponse, RecoveryPasswordRequest } from './interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -82,5 +82,9 @@ export class AuthApiService {
 
   getUserByToken(token: string){
     return lastValueFrom(this.httpClient.post<GetUserResponse>(environment.urlBack+'/auth/get-user-token/',token))
+  }
+
+  getAuthoritiesByToken(token: string){
+    return lastValueFrom(this.httpClient.post<GetAuthorites>(environment.urlBack + '/auth/get-authorities-token/', token))
   }
 }

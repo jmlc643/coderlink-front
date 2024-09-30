@@ -16,23 +16,22 @@ export class RegisterFreelancerComponent {
   
   createDeveloperRequest: CreateDeveloperRequest = {
     username: '',
-    dni: 4,
     names: '',
     lastName: '',
     email: '',
     password: '',
     typeUser: 'DEVELOPER',
     portfolio: '',
-    hoursWorked: 3,
     paymentRate: '',
     workExperience: '',
-    yearsExperience: 5,
     skills: []
   }
 
   // Variable to errors
 
   formError = ""
+
+  showSuccessModal = false;
 
   // Injection of FormBuilder to Validations
 
@@ -126,13 +125,19 @@ export class RegisterFreelancerComponent {
         },
         complete: () => {
           console.info("Register succesfuly")
-          this.router.navigateByUrl('/login');
+          this.showSuccessModal = true;
+          console.log(this.showSuccessModal)
           this.registerForm.reset();
         }
       }); 
     }else{
       this.registerForm.markAllAsTouched();
     }   
+  }
+
+  closeModal() {
+    this.showSuccessModal = false;
+    this.router.navigate(['/login']);
   }
 
   openGoogleAuth() {

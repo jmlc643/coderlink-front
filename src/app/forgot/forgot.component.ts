@@ -18,6 +18,8 @@ export class ForgotComponent {
     email: ''
   }
 
+  showSuccessModal = false
+
   formError = ''
 
   authApiService = inject(AuthApiService)
@@ -48,7 +50,7 @@ export class ForgotComponent {
         },
         complete: () => {
           console.info("Enviar correo completo")
-          this.router.navigate(['/login']);
+          this.showSuccessModal = true;
           this.recoveryPasswordForm.reset();
         }
       });
@@ -56,5 +58,10 @@ export class ForgotComponent {
       this.recoveryPasswordForm.markAllAsTouched();
       alert("Error de ingreso de datos")
     }
+  }
+
+  closeModal() {
+    this.showSuccessModal = false;
+    this.router.navigate(['/']);
   }
 }

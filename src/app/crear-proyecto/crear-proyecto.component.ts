@@ -30,13 +30,11 @@ export class CrearProyectoComponent implements OnInit{
     name: '',
     description: '',
     budget: 0,
-    milestones: 'milestones',
     presentation: '',
     revision: '',
     category: '',
     qualification: '',
-    username: '',
-    skills: ['Java', 'Angular', 'Spring']
+    username: ''
   }
 
   formError:String="";

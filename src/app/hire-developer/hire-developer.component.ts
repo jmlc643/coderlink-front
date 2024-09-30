@@ -25,9 +25,7 @@ export class HireDeveloperComponent implements OnInit {
   offerApiService = inject(OfferApiService)
   authApiService = inject(AuthApiService)
   createoffer: CreateJobOfferRequest ={
-    message: 'Quiero trabajar contigo',
     budget: 0,
-    duration: 'Al menos 1 mes',
     customerUsername: '',
     postulationId: 0
   }

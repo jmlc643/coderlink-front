@@ -31,3 +31,7 @@ export interface RecoveryPasswordResponse{
 export interface GetUserResponse{
     username: string
 }
+
+export interface GetAuthorites{
+    authorities: string
+}

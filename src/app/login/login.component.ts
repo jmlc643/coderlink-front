@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { NgFor,NgIf } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { AuthenticationUserRequest } from '../../api/auth-api/interfaces';
+import { AuthenticationUserRequest, GetAuthorites } from '../../api/auth-api/interfaces';
 import { AuthApiService } from '../../api/auth-api/auth-api.service';
 
 @Component({
@@ -18,6 +18,11 @@ export class LoginComponent {
   authRequest: AuthenticationUserRequest = {
     username: '',
     password: ''
+  }
+
+  token = ''
+  authorities: GetAuthorites = {
+    authorities: ''
   }
 
   // Variable to errors
@@ -70,12 +75,23 @@ export class LoginComponent {
           console.error(errorData);
           this.loginError="Credenciales invalidas";
         },
-        complete: () => {
+        complete: async () => {
           console.info("Login completo")
-          this.router.navigateByUrl('/profile-customer').then(() => {
-            window.location.reload();
-          });
-          this.loginForm.reset();
+          this.token = await this.authApiService.userToken
+          this.authorities = await this.authApiService.getAuthoritiesByToken(this.token)
+          console.log(this.authorities)
+          if(this.authorities.authorities == '[ROLE_CUSTOMER]'){
+            this.router.navigateByUrl('/profile-customer').then(() => {
+              window.location.reload();
+            });
+            this.loginForm.reset();
+          }
+          if(this.authorities.authorities == '[ROLE_DEVELOPER]'){
+            this.router.navigateByUrl('/profile-freelancer').then(() => {
+              window.location.reload();
+            });
+            this.loginForm.reset();
+          }
         }
       });
     }else{

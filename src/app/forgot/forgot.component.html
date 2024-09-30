@@ -31,3 +31,11 @@
     <p class="back-to-login"><a [routerLink]="'/login'">Volver a iniciar sesión</a></p>
   </div>
 </div>
+
+<div *ngIf="showSuccessModal" class="modal">
+  <div class="modal-content">
+     <h3>¡Correo de recuperación enviado!</h3>
+  <p>Se ha enviado un correo a tu cuenta. Si no lo ves en la bandeja de entrada, revisa la carpeta de spam.</p>
+ <button (click)="closeModal()">Cerrar</button>
+</div>
+</div>
