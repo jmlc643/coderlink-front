@@ -28,7 +28,7 @@ export class HeaderComponent implements OnInit {
 
   authApiService = inject(AuthApiService)
 
-  constructor(private router: Router) {}
+  router = inject(Router)
 
   async ngOnInit() {
     // Detecta la ruta actual y verifica si es la principal
