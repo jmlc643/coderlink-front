@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms'; // Importa FormsModule aquí
 import { AppComponent } from '../app.component';
 import { PrincipalComponent } from '../principal/principal.component';
 import { JoinSelectionComponent } from '../join-selection/join-selection.component';
-import { RegisterCustomerComponent } from '../register-customer/register-customer.component'; // Importar el componente
+import { RegisterCustomerComponent } from '../register-c/register-c.component'; // Importar el componente
 import { RegisterFreelancerComponent } from '../register-freelancer/register-freelancer.component';
 import { LoginComponent } from '../login/login.component';
 import { routes } from '../app.routes';
@@ -22,7 +22,9 @@ import { CrearProyectoComponent } from '../crear-proyecto/crear-proyecto.compone
 import { ModifyProjectComponent } from '../modify-project/modify-project.component';
 import { ViewProjectComponent } from '../view-project/view-project.component';
 import { HireDeveloperComponent } from '../hire-developer/hire-developer.component';
-
+import { HeaderComponent } from '../shared/header/header.component';
+import { RevisarPortafoliosFreelancerComponent } from '../revisar-portafolios-freelancer/revisar-portafolios-freelancer.component';
+import { HistorialProyectosComponent } from '../historial-proyectos/historial-proyectos.component';
 
 @NgModule({
   declarations: [
@@ -44,12 +46,15 @@ import { HireDeveloperComponent } from '../hire-developer/hire-developer.compone
     ModifyProjectComponent,
     ViewProjectComponent,
     HireDeveloperComponent,
+    HeaderComponent,
+    RevisarPortafoliosFreelancerComponent,
+    HistorialProyectosComponent,
   ],
   imports: [
     BrowserModule,
     CommonModule,
     FormsModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
   ],
   providers: [],
   bootstrap: [AppComponent]

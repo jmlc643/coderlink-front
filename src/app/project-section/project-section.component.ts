@@ -13,7 +13,7 @@ import { CreatePostulationRequests } from '../../api/postulation-api/interfaces'
 @Component({
   selector: 'app-project-section',
   standalone: true,
-  imports: [NgFor, NgIf, CommonModule, FormsModule],
+  imports: [NgFor, CommonModule, FormsModule],
   templateUrl: './project-section.component.html',
   styleUrl: './project-section.component.scss'
 })

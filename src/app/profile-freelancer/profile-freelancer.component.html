@@ -8,14 +8,16 @@
         <img src="path/to/profile-image.jpg" alt="Imagen de perfil" />
       </div>
       <div class="profile-info">
-        <h2>{{developer?.names}} {{developer?.lastNames}}</h2>
-        <p class="small-description">Experiencia: {{developer?.workExperience}}</p>
+        <h2>Nombres y Apellidos: {{developer?.names}} {{developer?.lastNames}}</h2>
+        <p class="small-description">Amo la programación </p>
+        <p class="full-description">Amo la programación.</p>
         <div class="rating">
           <span>⭐ 5.6 (10)</span>
-          <span class="hourly-rate">{{developer?.paymentRate}}</span>
+          <span class="hourly-rate">Mi tarifa es de {{developer?.paymentRate}}</span>
         </div>
         <button class="edit-btn">Editar Perfil</button>
-        <button class="contact-btn">Contactar</button>
+        <button class="contact-btn" (click)="verproyecto()">Ver Proyectos</button>
+
       </div>
     </div>
   
@@ -26,8 +28,8 @@
   
     <div class="skills">
       <h3>Habilidades</h3>
-      <div class="tags" *ngFor = "let skill of developer?.skills">
-        <span class="tag">{{skill.name}}</span>
+      <div class="tags" *ngFor="let skill of developer?.skills">
+        <span class="tag">{{skill}}</span>
       </div>
     </div>
   </div>

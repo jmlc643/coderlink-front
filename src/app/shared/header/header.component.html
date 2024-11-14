@@ -1,0 +1,27 @@
+<div class="header">
+    <nav class="navbar">
+      <div class="logo">
+        <img src="icons/logo.png" alt="CoderLink">
+        <a [routerLink]="'/'"class="brand-link">CODERLINK</a>
+      </div>
+  
+      <div class="nav-links">
+        <a [routerLink]="'/freelancer'">Freelancer</a>
+        <a [routerLink]="'/project-section'">Buscar Proyectos</a>
+        <a [routerLink]="'/hire-developer'">Contratar un Desarrollador</a>
+        <a href="#">Contacto</a>
+      </div>
+  
+      <!-- Mostrar el nombre del usuario y el botón de cerrar sesión si está logeado -->
+      <div class="auth-buttons" *ngIf="isLoggedIn">
+        <span class="user-name">{{ userName }} ({{ userRole }})</span>
+        <button class="logout-btn" (click)="logout()">Cerrar sesión</button>
+      </div>
+  
+      <!-- Mostrar botones de login y registrarse si NO está logeado -->
+      <div class="auth-buttons" *ngIf="!isLoggedIn && isPrincipalPage">
+        <button class="login-btn" (click)="navigateToLogin()">Login</button>
+        <button class="register-btn" (click)="navigateToJoinSelection()">Registrarse</button>
+      </div>
+    </nav>
+  </div>

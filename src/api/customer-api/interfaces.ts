@@ -6,9 +6,6 @@ export interface Customer{
     names: string
     lastNames: string
     email: string
-    companyName: string
-    ruc: number
-    phone: number
     projects: Project[]
     offers: JobOffer[]
 }
@@ -21,7 +18,4 @@ export interface CreateCustomerRequest{
     email: string
     password: string
     typeUser: string
-    companyName: string
-    ruc: number
-    phone: number
 }

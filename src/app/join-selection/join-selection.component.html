@@ -1,22 +1,22 @@
 <div class="join-page">
-<div class="join-container">
-  <h2>Únete como cliente o freelance</h2>
+  <div class="join-container">
+    <h2>Únete como cliente o freelance</h2>
+    
+    <div class="options">
+      <div class="option-card" [ngClass]="{'selected': selectedOption === 'cliente'}" (click)="selectOption('cliente')">
+        <div class="icon">👜</div>
+        <p>Soy un cliente que busca personal para un proyecto.</p>
+        <input type="radio" name="userType" [checked]="selectedOption === 'cliente'">
+      </div>
   
-  <div class="options">
-    <div class="option-card" [ngClass]="{'selected': selectedOption === 'cliente'}" (click)="selectOption('cliente')">
-      <div class="icon">👜</div>
-      <p>Soy un cliente que busca personal para un proyecto.</p>
-      <input type="radio" name="userType" [checked]="selectedOption === 'cliente'">
+      <div class="option-card" [ngClass]="{'selected': selectedOption === 'freelancer'}" (click)="selectOption('freelancer')">
+        <div class="icon">💻</div>
+        <p>Soy Desarrollador y busco trabajo</p>
+        <input type="radio" name="userType" [checked]="selectedOption === 'freelancer'">
+      </div>
     </div>
-
-    <div class="option-card" [ngClass]="{'selected': selectedOption === 'freelancer'}" (click)="selectOption('freelancer')">
-      <div class="icon">💻</div>
-      <p>Soy freelancer y busco trabajo</p>
-      <input type="radio" name="userType" [checked]="selectedOption === 'freelancer'">
-    </div>
+  
+    <button class="create-account-btn" [disabled]="!selectedOption" (click)="createAccount()">Crear una cuenta</button>
+    <p>¿Ya tienes una cuenta? <a [routerLink]="'/login'" class="login-link">Iniciar sesión</a></p>
   </div>
-
-  <button class="create-account-btn" [disabled]="!selectedOption" (click)="createAccount()">Crear una cuenta</button>
-  <p>¿Ya tienes una cuenta? <a [routerLink]="'/login'" class="login-link">Iniciar sesión</a></p>
-</div>
-</div>
+  </div>

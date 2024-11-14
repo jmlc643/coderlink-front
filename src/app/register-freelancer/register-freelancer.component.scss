@@ -1,6 +1,6 @@
 /* Página de registro */
 .register-page {
-  min-height: 100vh; /* Ocupa al menos toda la pantalla */
+  min-height: 130vh; /* Ocupa al menos toda la pantalla */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -23,23 +23,6 @@
     font-size: 1.8rem;
     margin-bottom: 20px;
     color: #333;
-  }
-
-  .google-btn {
-    width: 100%;
-    padding: 12px;
-    background-color: #4285F4;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 1rem;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-
-    &:hover {
-      background-color: darken(#4285F4, 10%);
-    }
   }
 
   .input-group {
@@ -121,27 +104,6 @@
     }
   }
 }
-
-/* Ajustes responsivos para pantallas pequeñas */
-@media (max-width: 768px) {
-  .register-container {
-    width: 90%; /* Ocupa el 90% del ancho de la pantalla */
-  }
-}
-
-/* Ajustes para zoom y scroll */
-html, body {
-  overflow-y: auto; /* Permite que el cuerpo haga scroll si el contenido es mayor */
-}
-
-.ng-valid:not(form).ng-touched {
-  border-left: 5px solid #42a948;
-}
-
-.ng-invalid:not(form).ng-touched {
-  border-left: 5px solid #a94442;
-}
-
 .modal {
   position: fixed;
   top: 0;
@@ -174,4 +136,23 @@ html, body {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+}
+/* Ajustes responsivos para pantallas pequeñas */
+@media (max-width: 768px) {
+  .register-container {
+    width: 90%; /* Ocupa el 90% del ancho de la pantalla */
+  }
+}
+
+/* Ajustes para zoom y scroll */
+html, body {
+  overflow-y: auto; /* Permite que el cuerpo haga scroll si el contenido es mayor */
+}
+
+.ng-valid:not(form).ng-touched {
+  border-left: 5px solid #42a948;
+}
+
+.ng-invalid:not(form).ng-touched {
+  border-left: 5px solid #a94442;
 }

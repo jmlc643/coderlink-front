@@ -37,7 +37,10 @@ export class ProfileFreelancerComponent implements OnInit{
 
   developer? : Developer
 
-    goToHome() {
-      this.router.navigate(['/']);
-    }
+  goToHome() {
+    this.router.navigate(['/']);
+  }
+  verproyecto() {
+    this.router.navigate(['/historial-proyectos']);
+  }
 }

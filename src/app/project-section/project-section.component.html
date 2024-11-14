@@ -1,52 +1,49 @@
 <div class="project-section-container">
-    <header class="navbar">
-      <div class="logo">
-        <h1>CoderLink</h1>
-      </div>
-      <div class="search-bar">
-        <input name="text" type="text" placeholder="Buscar trabajos..."  [(ngModel)] = "projectName"/>
-        <button (click)="search()">Buscar</button>
-      </div>
-      <nav class="nav-links">
-        <a href="/">Inicio</a>
-        <a href="#">Explorar</a>
-        <a href="/login">Iniciar Sesión</a>
-      </nav>
-    </header>
-  
-
-    <div class="main-content">
-      <aside class="filter-sidebar">
-        <h3>Filtrar por:</h3>
-        <div class="filter-category">
-          <h4>Categorías</h4>
-          <ul>
-            <li><input type="checkbox" /> Desarrollo Web</li>
-            <li><input type="checkbox" /> Diseño Gráfico</li>
-            <li><input type="checkbox" /> Escritura</li>
-          </ul>
-        </div>
-  
-        <div class="filter-price">
-          <h4>Rango de Precio</h4>
-          <input type="range" min="0" max="1000" />
-        </div>
-  
-        <div class="filter-location">
-          <h4>Ubicación</h4>
-          <input type="text" placeholder="Ciudad o País" />
-        </div>
-  
-        <button class="apply-filters-btn">Aplicar Filtros</button>
-      </aside>
-
-      <section class="jobs-listing">
-        <div class="job-card" *ngFor="let project of projects">
-          <h3>{{ project.name }}</h3>
-          <p>{{ project.description }}</p>
-          <button (click)="postulation(project.id)">Postularse</button>
-        </div>
-      </section>
+  <header class="navbar">
+    <div class="logo">
     </div>
+    <div class="search-bar">
+      <input type="text" placeholder="Buscar trabajos..." />
+      <button>Buscar</button>
+    </div>
+  </header>
+
+
+  <div class="main-content">
+    <aside class="filter-sidebar">
+      <h3>Filtrar por:</h3>
+      <div class="filter-category">
+        <h4>Categorías</h4>
+        <ul>
+          <li><input type="checkbox" /> Desarrollo Web</li>
+          <li><input type="checkbox" /> Diseño Gráfico</li>
+          <li><input type="checkbox" /> Escritura</li>
+        </ul>
+      </div>
+
+      <div class="filter-price">
+        <h4>Rango de Precio</h4>
+        <input type="range" min="0" max="1000" />
+      </div>
+
+      <div class="filter-location">
+        <h4>Ubicación</h4>
+        <input type="text" placeholder="Ciudad o País" />
+      </div>
+
+      <button class="apply-filters-btn">Aplicar Filtros</button>
+    </aside>
+
+    <section class="jobs-listing">
+      <div class="job-card" *ngFor="let project of projects">
+        <h3>{{ project.name }}</h3>
+        <p>{{ project.description }}</p>
+        <div class="job-details">
+          <span>Categoría: {{ project.category }}</span>
+          <span>Calificación: {{ project.qualification }}</span>
+        </div>
+        <button (click)="postulation(project.id)">Postularse</button>
+      </div>
+    </section>
   </div>
-  
+</div>

@@ -1,9 +1,8 @@
 <div class="register-page">
     <div class="register-container">
-        <h2>Regístrate para contratar talento</h2>
-        <button class="google-btn" (click)="openGoogleAuth()">Continuar con Google</button>
-      
-        <form [formGroup] = "registerForm" (submit)="register()">
+      <h2>Regístrate para contratar talento</h2>
+        
+      <form [formGroup] = "registerForm" (submit)="register()">
           <div class="input-group">
             <label for="firstName">Nombre</label>
             <input formControlName = "firstName" type="text" id="firstName" placeholder="Nombre" name="firstName" required/>
