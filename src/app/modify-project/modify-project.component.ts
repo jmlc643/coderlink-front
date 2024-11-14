@@ -1,5 +1,7 @@
-import { Component, Input } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, inject, Input, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Project } from '../../api/project-api/interfaces';
+import { ProjectApiService } from '../../api/project-api/project-api.service';
 
 @Component({
   selector: 'app-modify-project',
@@ -8,10 +10,15 @@ import { Router } from '@angular/router';
   templateUrl: './modify-project.component.html',
   styleUrl: './modify-project.component.scss'
 })
-export class ModifyProjectComponent {
-  @Input() project: any;
+export class ModifyProjectComponent implements OnInit{
+
+  project?: Project
+
+  activatedRouter = inject(ActivatedRoute)
+  idd = 0
+  projectApiService = inject(ProjectApiService)
   
-  constructor(private router: Router) {}
+  router = inject(Router)
 
   saveModify() {
     console.log('Modificar:', this.project);
@@ -21,5 +28,17 @@ export class ModifyProjectComponent {
   cancelModify() {
     console.log('Cancelando el modificar:', this.project);
     this.router.navigate(['/view-project']);
+  }
+
+  ngOnInit(): void {
+    this.activatedRouter.params.subscribe( prm => {
+      console.log(`El id es: ${prm['id']}`);
+      this.idd = +this.activatedRouter.snapshot.params['id'];
+    })
+    this.loadData()
+  }
+
+  private async loadData(){
+    this.project = await this.projectApiService.getProject(this.idd)
   }
 }

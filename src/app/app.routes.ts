@@ -35,7 +35,7 @@ export const routes: Routes = [
   { path: 'profile-customer-vista-d', component: ProfileCustomerVistaDComponent},
   { path: 'edit-profile-customer', component: EditProfileCustomerComponent},
   { path: 'crear-proyecto', component: CrearProyectoComponent},
-  { path: 'modify-project', component: ModifyProjectComponent},
+  { path: 'modify-project/:id', component: ModifyProjectComponent},
   { path: 'view-project/:id', component: ViewProjectComponent},
   { path: 'hire-developer/:id', component: HireDeveloperComponent},
 ];

@@ -29,7 +29,7 @@ export class ViewProjectComponent implements OnInit{
 
   editProject() {
     console.log('Modificando el proyecto:', this.project);
-    this.router.navigate(['/modify-project']); // Redirige a la página de modificación
+    this.router.navigate(['/modify-project/'+this.idd]); // Redirige a la página de modificación
   }
 
   deleteProject() {
@@ -50,7 +50,7 @@ export class ViewProjectComponent implements OnInit{
       this.idd = +this.activatedRouter.snapshot.params['id'];
     })
     this.loadData()
-}
+  }
 
   private async loadData(){
     this.project = await this.projectApiService.getProject(this.idd)
