@@ -19,7 +19,7 @@
       </div>
   
       <!-- Mostrar botones de login y registrarse si NO está logeado -->
-      <div class="auth-buttons" *ngIf="!isLoggedIn && isPrincipalPage">
+      <div class="auth-buttons" *ngIf="!isLoggedIn">
         <button class="login-btn" (click)="navigateToLogin()">Login</button>
         <button class="register-btn" (click)="navigateToJoinSelection()">Registrarse</button>
       </div>

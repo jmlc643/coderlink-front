@@ -37,6 +37,9 @@ export class HeaderComponent implements OnInit {
     });
     this.token = this.authApiService.userToken
     this.loadData()
+    if(this.userName != ''){
+      this.isLoggedIn = true
+    }
   }
 
   private async loadData(){

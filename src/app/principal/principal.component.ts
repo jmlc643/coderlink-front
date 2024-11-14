@@ -14,17 +14,6 @@ import { RouterModule } from '@angular/router';
 export class PrincipalComponent {
   constructor(private router: Router) {}
 
-
-  isLoggedIn: boolean = false;
-  userName: string = '';
-  userRole: string = '';
-
-  loginAsUser() {
-    // Simulamos que el usuario inicia sesión como 'Juan Pérez', rol 'Cliente'
-    this.isLoggedIn = true;
-    this.userName = 'Juan Pérez';
-    this.userRole = 'Cliente';
-  }
   navigateToJoinSelection() {
     this.router.navigate(['/join']);
   }
