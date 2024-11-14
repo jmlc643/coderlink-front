@@ -17,8 +17,9 @@ export class AuthApiService {
   httpClient = inject(HttpClient);
 
   constructor() {
-    this.currentUserLoginOn = new BehaviorSubject<boolean>(sessionStorage.getItem("token")!=null);
-    this.currentUserData = new BehaviorSubject<string>(sessionStorage.getItem("token")||"");
+    const token = typeof window !== 'undefined' ? sessionStorage.getItem("token") : null;
+    this.currentUserLoginOn = new BehaviorSubject<boolean>(token != null);
+    this.currentUserData = new BehaviorSubject<string>(token || "");
   }
 
   private handleError(error:HttpErrorResponse){
@@ -50,18 +51,21 @@ export class AuthApiService {
     return this.httpClient.post<any>(environment.urlBack+'/auth/register/developer/', developer)
   }
 
-  login(user: AuthenticationUserRequest):Observable<any>{
+  login(user: AuthenticationUserRequest): Observable<any> {
     return this.httpClient.post<any>(environment.urlBack + '/auth/login/', user).pipe(
       tap((userData) => {
-        console.log("User Data : "+userData);
-        sessionStorage.setItem("token", userData.token);
+        console.log("User Data : " + userData);
+        if (typeof window !== 'undefined') {
+          sessionStorage.setItem("token", userData.token);
+        }
         this.currentUserData.next(userData.token);
         this.currentUserLoginOn.next(true);
       }),
       map((userData) => userData.token),
       catchError(this.handleError)
-    )
+    );
   }
+  
 
   logout(){
     sessionStorage.removeItem("token");
