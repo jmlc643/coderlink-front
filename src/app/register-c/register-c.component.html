@@ -22,6 +22,14 @@
               </div>
             </div>
           </div>
+
+          <div class="input-group">
+            <label for="username">Nombre de Usuario</label>
+            <input type="text" id="username" placeholder="Nombre de Usuario"name="username" required/>
+            <div *ngIf="username?.invalid && username?.touched" class="error-message">
+              El nombre de usuario es obligatorio.
+            </div>
+          </div>
       
           <div class="input-group">
             <label for="email">Dirección de correo electrónico</label>

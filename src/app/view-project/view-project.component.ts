@@ -29,7 +29,7 @@ export class ViewProjectComponent implements OnInit{
 
   editProject() {
     console.log('Modificando el proyecto:', this.project);
-    this.router.navigate(['/modify-project/'+this.idd]); // Redirige a la página de modificación
+    this.router.navigate(['/solicitar-cambios']);
   }
 
   deleteProject() {

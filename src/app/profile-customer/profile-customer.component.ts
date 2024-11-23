@@ -41,6 +41,11 @@ export class ProfileCustomerComponent implements OnInit{
     this.router.navigate(['/']); // Cambia '/home' a la ruta de la página principal en tu proyecto
   }
 
+  goToFavorites() {
+    // Redirige a la ruta correcta de favoritos
+    this.router.navigate(['/ver-desarrolladores-favoritos']); // Asegúrate de que esta ruta esté bien configurada
+  }
+
   editProfile() {
     // Redirige a la página de edición de perfil
     this.router.navigate(['/edit-profile-customer']);
@@ -55,5 +60,9 @@ export class ProfileCustomerComponent implements OnInit{
     // Lógica para ver el proyecto
     console.log(`Viendo el proyecto con ID: ${id}`);
     this.router.navigate(['/view-project/'+id as string])
+  }
+
+  verproyecto() {
+    this.router.navigate(['/historial-proyectos']);
   }
 }

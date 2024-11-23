@@ -1,50 +1,39 @@
-  <div class="about-us-container">
-    <div class="image">
-      <img src="icons/freelancer.jpg" alt="persona">
-    </div>
+<div class="about-us-container">
+  <div class="image">
+    <img src="icons/freelancer.jpg" alt="persona">
+  </div>
+  <div class="about-us-text">
+    <h2>¿Quiénes somos?</h2>
+    <p>
+      CoderLink surge como una iniciativa innovadora con el objetivo de mejorar la conexión entre desarrolladores y usuarios que buscan servicios independientes.
+      Se posiciona como una plataforma clave en la intersección de la tecnología y el freelancing, ofreciendo soluciones integrales para la contratación y colaboración 
+      en proyectos de desarrollo de software.
+    </p>
+    
+  <div class="buttons">
+    <button class="clients-btn">Clientes</button>
+    <button class="freelancers-btn">Desarrolladores</button>
+  </div>
+</div>
+</div>
 
-    <div class="about-us-text">
-      <h2>¿Quiénes somos?</h2>
-      <p>
-        CoderLink surge como una iniciativa innovadora con el objetivo de mejorar la conexión entre desarrolladores y usuarios que buscan servicios independientes.
-        Se posiciona como una plataforma clave en la intersección de la tecnología y el freelancing, ofreciendo soluciones integrales para la contratación y colaboración 
-        en proyectos de desarrollo de software.
-      </p>
-    <div class="buttons">
-      <button class="clients-btn">Clientes</button>
-      <button class="freelancers-btn">Desarrolladores</button>
+<footer class="footer">
+  <div class="footer-content">
+    <div class="social-media">
     </div>
-  </div>
-  </div>
-  
-  <footer class="footer">
-    <div class="footer-content">
-      <div class="social-media">
-        <a href="#"><img src="icons/facebook.png" alt="Facebook"></a>
-        <a href="#"><img src="icons/twitter.webp" alt="Twitter"></a>
-        <a href="https://web.whatsapp.com/" target="_blank"><img src="icons/whatsapp.webp" alt="Whatsapp"></a>
+    <div class="footer-links">
+      <div class="section">
+        <h4>Freelancer</h4>
+        <a [routerLink]="'/project-section'">Categorías</a>
+        <a [routerLink]="'/project-section'">Proyectos</a>
       </div>
-  
-      <div class="footer-links">
-        <div class="section">
-          <h4>Freelancer</h4>
-          <a href="#">Categorías</a><br>
-          <a [routerLink]="'/project-section'">Proyectos</a>
-        </div>
-        <div class="section">
-          <h4>Información</h4>
-          <a href="#">Quiénes somos</a><br>
-          <a href="#">Cómo Funciona</a><br>
-          <a href="#">Equipo</a><br>
-          <a href="#">Empleos</a>
-        </div>
-        <div class="section">
-          <h4>Términos</h4>
-          <a href="#">Política de privacidad</a><br>
-          <a href="#">Términos y Condiciones</a><br>
-          <a href="#">Política de derechos de autor</a>
-        </div>
+      
+      <div class="section">
+        <h4>Términos</h4>
+        <a href="#">Política de privacidad</a><br>
+        <a href="#">Términos y Condiciones</a><br>
+        <a href="#">Política de derechos de autor</a>
       </div>
     </div>
-  </footer>
-  
+  </div>
+</footer>

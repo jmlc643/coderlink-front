@@ -22,10 +22,18 @@
           </div>
         </div>
       </div>
+
+      <div class="input-group">
+        <label for="username">Nombre de Usuario</label>
+        <input type="text" id="username" placeholder="Nombre de Usuario" name="username" required/>
+        <div *ngIf="username?.invalid && username?.touched" class="error-message">
+          El nombre de usuario es obligatorio.
+        </div>
+      </div>
   
       <div class="input-group">
         <label for="portfolio">Portafolio</label>
-        <textarea formControlName = "portfolio" id="portfolio" placeholder="Descripción del portafolio" name="portfolio" required></textarea>
+        <textarea formControlName = "portfolio" id="portfolio" placeholder="Https://" name="portfolio" required></textarea>
         <div *ngIf="portfolio?.invalid && (portfolio?.dirty || portfolio?.touched)" class="text-danger">
           <div *ngIf="portfolio?.errors?.['required']">
             El portfolio es requerido
@@ -35,11 +43,29 @@
   
       <div class="input-group">
         <label for="skills">Habilidades</label>
-        <input formControlName = "skills" type="text" id="skills" placeholder="Habilidades" name="skills" required />
-        <div *ngIf="skills?.invalid && (skills?.dirty || skills?.touched)" class="text-danger">
-          <div *ngIf="skills?.errors?.['required']">
-            Las skills son requeridas
-          </div>
+        <div class="skill-input">
+          <input
+            type="text"
+            placeholder="Habilidad"
+            formControlName = "skills"
+            required
+            class = "input-with-button"
+            id = "skill-input-form"
+          />
+        <button type="button" class="add-btn" (click)="addSkill()">+</button>
+        </div>
+        <div *ngFor="let skill of createDeveloperRequest.skills; let i = index" class="skill-item">
+          <p
+            type="text"
+            id="skills-{{ i }}"
+            placeholder="Habilidad"
+            required
+          > {{skill}}
+          <button
+        type="button"
+        class="remove-btn"
+        (click)="removeSkill(i)"
+        *ngIf="createDeveloperRequest.skills.length > 0" >-</button>
         </div>
       </div>
   
@@ -50,6 +76,9 @@
           <div *ngIf="workExperience?.errors?.['required']">
             La experiencia es requerida
           </div>
+          <div *ngIf="workExperience?.errors?.['maxlength']">
+            No puedes exceder los 150 caracteres
+          </div>
         </div>
       </div>
   
@@ -59,6 +88,9 @@
         <div *ngIf="paymentRate?.invalid && (paymentRate?.dirty || paymentRate?.touched)" class="text-danger">
           <div *ngIf="paymentRate?.errors?.['required']">
             La tarifa es requerida
+          </div>
+          <div *ngIf="paymentRate?.errors?.['min']">
+            La tarifa debe ser mayor a 0
           </div>
         </div>
       </div>

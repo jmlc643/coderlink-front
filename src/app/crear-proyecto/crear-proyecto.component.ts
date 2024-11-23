@@ -48,7 +48,8 @@ export class CrearProyectoComponent implements OnInit{
       presentacion: ['', Validators.required],
       revision: ['', Validators.required],
       categoria: ['', Validators.required],
-      calificacion: ['1', Validators.required]
+      calificacion: ['1', Validators.required],
+      tarifa: ['', [Validators.required, Validators.min(1)]]
   });
   
   ngOnInit(): void {
@@ -83,6 +84,10 @@ export class CrearProyectoComponent implements OnInit{
 
   get calificacion(){
     return this.proyectoForm.get('calificacion')
+  }
+
+  get tarifa(){
+    return this.proyectoForm.get('tarifa')
   }
 
   errorData: String="";

@@ -41,6 +41,9 @@ export class ProfileFreelancerComponent implements OnInit{
     this.router.navigate(['/']);
   }
   verproyecto() {
-    this.router.navigate(['/historial-proyectos']);
+    this.router.navigate(['/developer-historial-proyectos']);
+  }
+  editarperfil() {
+    this.router.navigate(['/edit-profile-freelancer'])
   }
 }

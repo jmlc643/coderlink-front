@@ -70,6 +70,7 @@ export class RegisterCustomerComponent {
   registerForm = this.formBuilder.group({
     firstName : ['', Validators.required],
     lastName: ['', Validators.required],
+    username: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
     password: ['',[Validators.required, Validators.minLength(8)]],
     confirmPassword: ['', [Validators.required, Validators.minLength(8)]] 
@@ -81,6 +82,10 @@ export class RegisterCustomerComponent {
 
   get lastName(){
     return this.registerForm.get('lastName')
+  }
+
+  get username(){
+    return this.registerForm.get('username')
   }
 
   get email(){
@@ -102,7 +107,7 @@ export class RegisterCustomerComponent {
       let lastNameControl = this.registerForm.controls.lastName.value as string
       this.createCustomerRequest.names = namesControl
       this.createCustomerRequest.lastName = lastNameControl
-      this.createCustomerRequest.username = namesControl.at(0) + lastNameControl
+      this.createCustomerRequest.username = this.registerForm.controls.username.value as string
       this.createCustomerRequest.email = this.registerForm.controls.email.value as string
       this.createCustomerRequest.password = this.registerForm.controls.password.value as string 
       console.log(this.createCustomerRequest)

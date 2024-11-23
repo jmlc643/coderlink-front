@@ -28,7 +28,7 @@
 /* Contenedor principal */
 .profile-customer-container {
   background-color: #fff;
-  padding: 30px;
+  padding: 40px;
   border-radius: 10px;
   max-width: 800px;
   margin: 40px auto;
@@ -44,7 +44,7 @@
   .profile-image {
     width: 100px;
     height: 100px;
-    margin-right: 20px;
+    margin-right: 30px;
 
     img {
       width: 100%;
@@ -56,6 +56,7 @@
   }
 
   .profile-info {
+
     h2 {
       font-size: 2rem;
       margin: 0;
@@ -71,6 +72,7 @@
     .edit-profile-btn {
       padding: 10px 20px;
       background-color: #007bff;
+      margin-right: 5px;
       color: white;
       border: none;
       border-radius: 5px;
@@ -80,6 +82,37 @@
 
       &:hover {
         background-color: darken(#007bff, 10%);
+      }
+    }
+    .contact-btn {
+      padding: 10px 20px;
+      background-color: #007bff;
+      margin-right: 5px;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
+      gap: 10px;
+
+      &:hover {
+        background-color: darken(#007bff, 10%);
+      }
+    }
+    /* boton de favoritos*/
+.view-favorites-btn {
+  padding: 10px 20px;  /* Mantener el tamaño adecuado */
+  background-color: rgb(255, 166, 32);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: darken(rgb(255, 166, 32), 10%);
       }
     }
   }
@@ -148,6 +181,7 @@
     }
   }
 }
+
 
 /* Ajustes responsivos */
 @media (max-width: 768px) {

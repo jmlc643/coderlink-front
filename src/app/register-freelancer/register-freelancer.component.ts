@@ -8,7 +8,7 @@ import { AuthApiService } from '../../api/auth-api/auth-api.service';
 @Component({
   selector: 'app-register-freelancer',
   standalone: true,
-  imports: [NgIf, ReactiveFormsModule],
+  imports: [NgFor, NgIf, ReactiveFormsModule],
   templateUrl: './register-freelancer.component.html',
   styleUrls: ['./register-freelancer.component.scss']
 })
@@ -30,6 +30,7 @@ export class RegisterFreelancerComponent {
   // Variable to errors
 
   formError = ""
+  experienceError = false;
 
   showSuccessModal = false;
 
@@ -49,12 +50,13 @@ export class RegisterFreelancerComponent {
   registerForm = this.formBuilder.group({
     firstName : ['', Validators.required],
     lastName: ['', Validators.required],
+    username: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
     password: ['',[Validators.required, Validators.minLength(8)]],
     confirmPassword: ['', [Validators.required, Validators.minLength(8)]],
     portfolio: ['', Validators.required],
-    paymentRate: ['', Validators.required],
-    workExperience: ['', Validators.required],
+    paymentRate: ['', [Validators.required, Validators.min(1)]],
+    workExperience: ['', [Validators.required, Validators.maxLength(150)]],
     skills: ['', Validators.required]
   })
 
@@ -64,6 +66,10 @@ export class RegisterFreelancerComponent {
 
   get lastName(){
     return this.registerForm.get('lastName')
+  }
+
+  get username(){
+    return this.registerForm.get('username')
   }
 
   get email(){
@@ -101,7 +107,7 @@ export class RegisterFreelancerComponent {
       let lastNameControl = this.registerForm.controls.lastName.value as string
       this.createDeveloperRequest.names = namesControl
       this.createDeveloperRequest.lastName = lastNameControl
-      this.createDeveloperRequest.username = namesControl.at(0) + lastNameControl
+      this.createDeveloperRequest.username = this.registerForm.controls.username.value as string
       this.createDeveloperRequest.email = this.registerForm.controls.email.value as string
       this.createDeveloperRequest.password = this.registerForm.controls.password.value as string
       this.createDeveloperRequest.portfolio = this.registerForm.controls.portfolio.value as string
@@ -138,5 +144,26 @@ export class RegisterFreelancerComponent {
   closeModal() {
     this.showSuccessModal = false;
     this.router.navigate(['/login']);
+  }
+
+  validateExperienceLength() {
+    this.experienceError = this.createDeveloperRequest.workExperience.length > 150;
+  }
+
+  addSkill() {
+    // Agrega un nuevo campo vacío al array de habilidades
+    this.createDeveloperRequest.skills.push(this.registerForm.controls.skills.value as string);
+    const inputSkill = document.getElementById("skill-input-form") as HTMLInputElement
+    if (inputSkill) {
+      inputSkill.value = "";
+    }
+  }
+
+
+  removeSkill(index: number) {
+    // Remueve el campo de habilidad en el índice especificado
+    if (this.createDeveloperRequest.skills.length > 0) {
+      this.createDeveloperRequest.skills.splice(index, 1);
+    }
   }
 }
