@@ -37,7 +37,6 @@ export class ProfileCustomerComponent implements OnInit{
   private async loadData(){
     this.username = await this.authApiService.getUser() as AuthResponse
     this.customer = await this.customerApiService.getCustomer(this.username.username)
-    console.log(this.customer)
   }
 
   goToHome() {

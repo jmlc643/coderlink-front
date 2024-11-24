@@ -23,4 +23,12 @@ export class CustomerApiService {
   getCustomer(username: string){
     return lastValueFrom(this.httpClient.get<Customer>(environment.urlBack+'/customer/get-customer/'+username))
   }
+
+  addFavorite(username: string, developer: string){
+    return lastValueFrom(this.httpClient.get<Customer>(environment.urlBack+`/customer/add-favorite/${username}/${developer}`))
+  }
+
+  removeFavorite(username: string, developer: string){
+    return lastValueFrom(this.httpClient.delete<Customer>(environment.urlBack+`/customer/delete-favorite/${username}/${developer}`))
+  }
 }

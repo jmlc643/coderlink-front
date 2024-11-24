@@ -1,6 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { NgForOf } from '@angular/common';  // Importa la directiva NgForOf
 import { Router } from '@angular/router';  // Importa el Router
+import { AuthApiService } from '../../api/auth-api/auth-api.service';
+import { Customer } from '../../api/customer-api/interfaces';
+import { CustomerApiService } from '../../api/customer-api/customer-api.service';
+import { Developer } from '../../api/developer-api/interfaces';
 
 @Component({
   selector: 'app-ver-desarrolladores-favoritos',
@@ -10,39 +14,25 @@ import { Router } from '@angular/router';  // Importa el Router
   styleUrls: ['./ver-desarrolladores-favoritos.component.scss']
 })
 export class VerDesarrolladoresFavoritosComponent {
-  freelancersFavoritos: any[] = [];
+  router = inject(Router)
+  username = ""
+  authApiService = inject(AuthApiService)
+  customer?: Customer
+  customerApiService = inject(CustomerApiService)
 
-  constructor(private router: Router) {}  // Inyecta el servicio Router
-
-  ngOnInit(): void {
-    // Ejemplos de freelancers (simulados, para probar la interfaz)
-    this.freelancersFavoritos = [
-      {
-        nombre: 'John Doe',
-        apellido: 'Doe',
-        descripcion: 'Desarrollador Full Stack con 5 años de experiencia en JavaScript, Angular y Node.js.',
-        puntuacion: { estrellas: 5, cantidad: 10 },
-        tarifa: 50
-      },
-      {
-        nombre: 'Jane Smith',
-        apellido: 'Smith',
-        descripcion: 'Especialista en diseño UX/UI con experiencia en la creación de interfaces intuitivas.',
-        puntuacion: { estrellas: 4, cantidad: 12 },
-        tarifa: 40
-      },
-      {
-        nombre: 'Carlos Martín',
-        apellido: 'Martín',
-        descripcion: 'Desarrollador Frontend con experiencia en React y Vue.js. Amante del código limpio.',
-        puntuacion: { estrellas: 5, cantidad: 8 },
-        tarifa: 45
-      }
-    ];
+  async ngOnInit() {
+    this.username = this.authApiService.getUser()?.username as string
+    await this.loadData()
   }
 
-  eliminarDeFavoritos(freelancer: any): void {
-    this.freelancersFavoritos = this.freelancersFavoritos.filter(f => f !== freelancer);
+  private async loadData(){
+    this.customer = await this.customerApiService.getCustomer(this.username);
+  }
+
+  eliminarDeFavoritos(developer: Developer): void {
+    this.customerApiService.removeFavorite(this.username as string, developer.username).then(() => {
+      window.location.reload()
+    });
   }
 
   // Método para navegar al perfil del cliente

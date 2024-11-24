@@ -3,14 +3,14 @@
   <div class="back-button-container"> 
     <button class="btn btn-secondary mb-4" (click)="navigateBack()">Regresar a Freelancer</button>
   </div>
-    <div *ngFor="let freelancer of freelancers" class="card">
-      <h3>{{ freelancer.nombre }}</h3>
-      <p>{{ freelancer.descripcion }}</p>
+    <div class="card">
+      <h3>{{ developer?.names }} {{developer?.lastNames}}</h3>
+      <p>{{ developer?.workExperience }}</p>
       <div class="web-section">
         <label>Web:</label>
-        <div *ngIf="freelancer.web; else noLink">
+        <div *ngIf="developer?.portfolio; else noLink">
             <!-- Mostrar el enlace si está disponible -->
-            <a [href]="freelancer.web" target="_blank" class="link">{{ freelancer.web }}</a>
+            <a [href]="developer?.portfolio" target="_blank" class="link">{{ developer?.portfolio }}</a>
           </div>
           <!-- Mostrar un mensaje si no hay enlace -->
           <ng-template #noLink><span>No disponible</span></ng-template>

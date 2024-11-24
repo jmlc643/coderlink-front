@@ -26,13 +26,14 @@
           <div class="freelancer-img">
             <img src="icons/desarrollador2.png" alt="Freelancer Profile" />
           </div>
-          <div class="freelancer-info">
-            <h3>{{ freelancer.name }}</h3>
-            <p>{{ freelancer.description }}</p>
-            <p class="rating">⭐ {{ freelancer.rating }} ({{ freelancer.reviews }})</p>
-            <p class="price">${{ freelancer.hourlyRate }}/h</p>
-            <button class="view-profile-btn" (click)="viewProfile()">Ver Perfil</button>
-            <button class="favorite-btn" [ngClass]="{ 'favorited': freelancer.isFavorite }" (click)="setFavorite(freelancer)">❤</button>
+          <div *ngFor="let freelancer of freelancers">
+            <div class="freelancer-info">
+              <h3>{{ freelancer.names }} {{freelancer.lastNames}}</h3>
+              <p>{{ freelancer.workExperience }}</p>
+              <p class="price">${{ freelancer.paymentRate }}/h</p>
+              <button class="view-profile-btn" (click)="viewProfile(freelancer)">Ver Perfil</button>
+              <button class="favorite-btn" [ngClass]="{ 'favorited': isFavorite(freelancer) }" (click)="toggleFavorite(freelancer)">❤</button>
+            </div>
           </div>
         </div>
       </div>

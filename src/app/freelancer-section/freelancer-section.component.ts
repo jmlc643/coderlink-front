@@ -1,7 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { NgFor,NgIf,NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { DeveloperApiService } from '../../api/developer-api/developer-api.service';
+import { Developer } from '../../api/developer-api/interfaces';
+import { AuthApiService } from '../../api/auth-api/auth-api.service';
+import { CustomerApiService } from '../../api/customer-api/customer-api.service';
 
 
 @Component({
@@ -11,33 +15,46 @@ import { Router } from '@angular/router';
   templateUrl: './freelancer-section.component.html',
   styleUrls: ['./freelancer-section.component.scss'] // Asegúrate de que sea 'styleUrls', no 'styleUrl'
 })
-export class FreelancerSectionComponent {
+export class FreelancerSectionComponent implements OnInit{
   
-  constructor (private router: Router) {}
-  freelancers = [
-    {
-      name: 'Juan Herrera Mariños',
-      description: 'Pequeña descripción',
-      rating: 5.0,
-      reviews: 10,
-      hourlyRate: 50,
-      imageUrl: 'assets/profile-placeholder.png',
-      isFavorite: false
-    },
-    {
-      name: 'Nombres y Apellidos',
-      description: 'Pequeña descripción',
-      rating: 5.0,
-      reviews: 10,
-      hourlyRate: 50,
-      imageUrl: 'assets/profile-placeholder.png',
-      isFavorite: false
-    }
-  ];
+  router = inject(Router);
+  freelancerApiService = inject(DeveloperApiService);
+  authApiService = inject(AuthApiService)
+  customerApiService = inject(CustomerApiService)
+  freelancers: Developer[] = [];
+  favorites: Developer[] = [];
 
-  setFavorite(freelancer: any): void {
-    if (!freelancer.isFavorite) {
-      freelancer.isFavorite = true;
+  async ngOnInit() {
+      await this.loadData()
+  }
+
+  private async loadData(){
+    this.freelancers = await this.freelancerApiService.listDevelopers()
+    const username = this.authApiService.getUser()?.username;
+    this.customerApiService.getCustomer(username as string).then(response => {
+      this.favorites = response.favoritesDevs; // IDs de los favoritos
+  });
+  }
+
+  isFavorite(developer: Developer): boolean {
+    return this.favorites.some(fav => this.areDevelopersEqual(fav, developer));
+  }
+
+  areDevelopersEqual(dev1: Developer, dev2: Developer): boolean {
+    return dev1.username === dev2.username; // Usa una propiedad única como `username` para comparar
+  }
+
+  toggleFavorite(developer: Developer): void {
+    const username = this.authApiService.getUser()?.username;
+  
+    if (this.isFavorite(developer)) {
+      this.customerApiService.removeFavorite(username as string, developer.username).then(() => {
+        this.favorites = this.favorites.filter(fav => !this.areDevelopersEqual(fav, developer));
+      });
+    } else {
+      this.customerApiService.addFavorite(username as string, developer.username).then(() => {
+        this.favorites.push(developer);
+      });
     }
   }
 
@@ -47,8 +64,7 @@ export class FreelancerSectionComponent {
   }
 
   // Método para ver el perfil del freelancer
-  viewProfile() {
-    this.router.navigate(['/revisar-portafolios-freelancer']);
-    
+  viewProfile(freelancer: Developer) {
+    this.router.navigate(['/revisar-portafolios-freelancer/'+freelancer.username]);
   }
 }

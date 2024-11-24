@@ -51,7 +51,9 @@ export class HeaderComponent implements OnInit {
 
   logout() {
     this.authApiService.logout()
-    this.router.navigate(['/login']); // Redirige a login tras cerrar sesión
+    this.router.navigate(['/login']).then(() => {
+      window.location.reload(); // Recarga la página para forzar la actualización del header
+    });
   }
 
   navigateToJoinSelection() {

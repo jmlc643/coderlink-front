@@ -1,3 +1,4 @@
+import { Developer } from "../developer-api/interfaces"
 import { JobOffer } from "../offer-api/interfaces"
 import { Project } from "../project-api/interfaces"
 
@@ -8,6 +9,7 @@ export interface Customer{
     email: string
     projects: Project[]
     offers: JobOffer[]
+    favoritesDevs: Developer[]
 }
 
 export interface CreateCustomerRequest{

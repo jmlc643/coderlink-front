@@ -129,6 +129,7 @@
 /* Sección de habilidades */
 .tags {
   display: flex;
+  flex-direction: row;
   flex-wrap: wrap;
 }
 
