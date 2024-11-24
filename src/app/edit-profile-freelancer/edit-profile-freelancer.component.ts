@@ -1,28 +1,81 @@
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, inject, OnInit } from '@angular/core';
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { DeveloperApiService } from '../../api/developer-api/developer-api.service';
+import { NgIf } from '@angular/common';
+import { AuthApiService } from '../../api/auth-api/auth-api.service';
+import { UpdateDeveloper } from '../../api/developer-api/interfaces';
 
 @Component({
   selector: 'app-edit-profile-freelancer',
   standalone: true,
-  imports: [FormsModule],
+  imports: [ReactiveFormsModule, NgIf],
   templateUrl: './edit-profile-freelancer.component.html',
   styleUrl: './edit-profile-freelancer.component.scss'
 })
-export class EditProfileFreelancerComponent {
-  linkportafolio: string = '';
-  nombreusuario: string = '';
-  tarifa: number = 0;
-  email: string = '';
-  password: string = '';
-  companyName: string = '';
+export class EditProfileFreelancerComponent implements OnInit{
 
-  constructor(private router: Router) {}
+  router = inject(Router)
+  formBuilder = inject(FormBuilder)
+
+  isVerificationModalOpen = false;
+  verificationCode = '';
+  developerApiService = inject(DeveloperApiService)
+
+  user = ''
+
+  authApiService = inject(AuthApiService)
+
+  editForm = this.formBuilder.group({
+    username: ['', Validators.required],
+    password: ['', [Validators.required, Validators.minLength(8)]],
+    portfolio: ['', Validators.required],
+    paymentRate: [0, [Validators.required, Validators.min(1)]],
+    email: ['', [Validators.required, Validators.email]]
+  });
+
+  verifyCodeForm = this.formBuilder.group({
+    code: ["", Validators.required]
+  })
+
+  async ngOnInit(){
+    await this.loadData()
+  }
+
+  private async loadData(){
+    this.user = await this.authApiService.getUser()?.username as string
+  }
+
+  get username(){
+    return this.editForm.get('username')
+  }
+
+  get email(){
+    return this.editForm.get('email')
+  }
+
+  get password(){
+    return this.editForm.get('password')
+  }
+
+  get paymentRate(){
+    return this.editForm.get('paymentRate')
+  }
+
+  get portfolio(){
+    return this.editForm.get('portfolio')
+  }
+
+  get code(){
+    return this.verifyCodeForm.get('code')
+  }
 
   save(): void {
-    console.log('Guardar cambios');
-    alert('Se ha guardado correctamente los cambios');
-    this.router.navigate(['/profile-freelancer'])
+    const formData = this.editForm.value;
+    // Solicita el envío del código de verificación
+    this.developerApiService.sendVerificationCode(formData.email as string).subscribe(() => {
+      this.isVerificationModalOpen = true; // Abre el modal
+    });
   }
 
   cancel(): void {
@@ -31,15 +84,38 @@ export class EditProfileFreelancerComponent {
     this.router.navigate(['/profile-freelancer'])
   }
 }
-
-  goToChangePassword(): void {
-    console.log('Cambiar contraseña');
-    this.router.navigate(['/change-password-freelancer']);
-  }
   validateNumberInput(event: KeyboardEvent): void {
     const inputChar = String.fromCharCode(event.charCode);
     if (!/^\d$/.test(inputChar)) {
       event.preventDefault();
     }
+  }
+
+  closeModal() {
+    this.isVerificationModalOpen = false;
+    this.verificationCode = '';
+  }
+
+  verifyCode() {
+    const email = this.editForm.get('email')?.value;
+    this.verificationCode = this.verifyCodeForm.controls.code.value as string
+    const formData = this.editForm.value;
+
+    // Verifica el código ingresado
+    this.developerApiService.verifyEmailCode(email as string, this.verificationCode).subscribe({
+      complete: () => {
+        console.log('Correo verificado correctamente');
+        this.closeModal();
+        this.developerApiService.updateCustomer(formData as UpdateDeveloper, this.user)
+        this.authApiService.logout()
+        this.router.navigate(['/login']).then(() => {
+          window.location.reload()
+        })
+      },
+      error: (error) => {
+        console.error('Error al verificar el código:', error);
+      }
+    }
+    );
   }
 }

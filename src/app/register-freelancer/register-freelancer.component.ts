@@ -22,7 +22,7 @@ export class RegisterFreelancerComponent {
     password: '',
     typeUser: 'DEVELOPER',
     portfolio: '',
-    paymentRate: '',
+    paymentRate: 0,
     workExperience: '',
     skills: []
   }
@@ -55,7 +55,7 @@ export class RegisterFreelancerComponent {
     password: ['',[Validators.required, Validators.minLength(8)]],
     confirmPassword: ['', [Validators.required, Validators.minLength(8)]],
     portfolio: ['', Validators.required],
-    paymentRate: ['', [Validators.required, Validators.min(1)]],
+    paymentRate: [0, [Validators.required, Validators.min(1)]],
     workExperience: ['', [Validators.required, Validators.maxLength(150)]],
     skills: ['', Validators.required]
   })
@@ -112,8 +112,7 @@ export class RegisterFreelancerComponent {
       this.createDeveloperRequest.password = this.registerForm.controls.password.value as string
       this.createDeveloperRequest.portfolio = this.registerForm.controls.portfolio.value as string
       this.createDeveloperRequest.workExperience = this.registerForm.controls.workExperience.value as string
-      this.createDeveloperRequest.paymentRate = this.registerForm.controls.paymentRate.value as string
-      this.createDeveloperRequest.skills.push(this.registerForm.controls.skills.value as string) 
+      this.createDeveloperRequest.paymentRate = this.registerForm.controls.paymentRate.value as number
       console.log(this.createDeveloperRequest)
       this.authApiService.registerDeveloper(this.createDeveloperRequest).subscribe({
         next: (userData) => {
@@ -157,6 +156,7 @@ export class RegisterFreelancerComponent {
     if (inputSkill) {
       inputSkill.value = "";
     }
+    console.log(this.createDeveloperRequest.skills)
   }
 
 

@@ -7,7 +7,7 @@ export interface Developer{
     lastNames: string
     email: string
     portfolio: string
-    paymentRate: string
+    paymentRate: number
     workExperience: string
     postulations: Postulation[]
     skills: Skill[]
@@ -21,7 +21,15 @@ export interface CreateDeveloperRequest{
     password: string
     typeUser: string
     portfolio: string
-    paymentRate: string
+    paymentRate: number
     workExperience: string
     skills: string[]
+}
+
+export interface UpdateDeveloper{
+    username: string
+    portfolio: string
+    paymentRate: number
+    email: string
+    password: string
 }

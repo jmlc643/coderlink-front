@@ -86,7 +86,7 @@
   
       <div class="input-group">
         <label for="rate">Tarifa</label>
-        <input formControlName = "paymentRate" type="text" id="rate" placeholder="Tarifa por hora" name="rate" required />
+        <input formControlName = "paymentRate" type="number" id="rate" placeholder="Tarifa por hora" name="rate" required />
         <div *ngIf="paymentRate?.invalid && (paymentRate?.dirty || paymentRate?.touched)" class="text-danger">
           <div *ngIf="paymentRate?.errors?.['required']">
             La tarifa es requerida
