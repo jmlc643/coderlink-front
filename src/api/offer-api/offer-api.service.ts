@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { last, lastValueFrom } from 'rxjs';
+import { lastValueFrom } from 'rxjs';
 import { CreateJobOfferRequest, JobOffer } from './interfaces';
 import { environment } from '../../environments/environment.development';
 

@@ -35,6 +35,13 @@ export class HeaderComponent implements OnInit {
     this.router.events.subscribe(() => {
       this.isPrincipalPage = this.router.url === '/' || this.router.url === '/principal';
     });
+    const user = this.authApiService.getUser(); // Verifica si hay un usuario autenticado
+
+    if (!user) {
+      console.warn('Usuario no autenticado. Redirigiendo al login...');
+      this.router.navigate(['/login']); // Redirige al login si no hay usuario
+      return; // Evita ejecutar el resto del código
+    }
     await this.loadData()
     this.isLoggedIn = this.authApiService.isAuthenticated()
   }

@@ -10,7 +10,7 @@ import { Customer } from '../../api/customer-api/interfaces';
 @Component({
   selector: 'app-historial-proyectos',
   standalone: true,
-  imports: [CommonModule, DatePipe],
+  imports: [CommonModule],
   templateUrl: './historial-proyectos.component.html',
   styleUrl: './historial-proyectos.component.scss',
   providers: [DatePipe],

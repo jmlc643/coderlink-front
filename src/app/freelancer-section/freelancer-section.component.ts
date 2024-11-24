@@ -11,7 +11,7 @@ import { CustomerApiService } from '../../api/customer-api/customer-api.service'
 @Component({
   selector: 'app-freelancer-sectiont',
   standalone:true,
-  imports: [NgIf,NgFor,NgClass,FormsModule],
+  imports: [NgFor,NgClass,FormsModule],
   templateUrl: './freelancer-section.component.html',
   styleUrls: ['./freelancer-section.component.scss'] // Asegúrate de que sea 'styleUrls', no 'styleUrl'
 })

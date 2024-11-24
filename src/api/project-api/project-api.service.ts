@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { catchError, lastValueFrom, Observable } from 'rxjs';
+import { lastValueFrom, Observable } from 'rxjs';
 import { CreateProjectRequest, Project, SearchProjectRequest, SetStatus } from './interfaces';
 import { environment } from '../../environments/environment.development';
 

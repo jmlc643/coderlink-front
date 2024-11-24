@@ -1,6 +1,6 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { BehaviorSubject, lastValueFrom, Observable, throwError } from 'rxjs';
+import { BehaviorSubject, lastValueFrom } from 'rxjs';
 import { Customer } from './interfaces';
 import { environment } from '../../environments/environment.development';
 
@@ -13,8 +13,6 @@ export class CustomerApiService {
   currentUserData : BehaviorSubject<string> = new BehaviorSubject<string>("");
 
   httpClient = inject(HttpClient);
-
-  constructor() {}
 
   listCustomers(){
     return lastValueFrom(this.httpClient.get<Customer[]>(environment.urlBack+'/customer/list/'))

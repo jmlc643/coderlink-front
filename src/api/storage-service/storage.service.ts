@@ -8,7 +8,6 @@ export class StorageService {
   private authKey = 'coderlink_auth';
   private selectKey = 'lastSelectedStatus';
 
-  constructor() {}
 
   private isLocalStorageAvailable(): boolean {
     return typeof window !== 'undefined' && !!window.localStorage;

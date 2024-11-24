@@ -11,10 +11,10 @@ import { Router } from '@angular/router';
   styleUrl: './change-password-freelancer.component.scss'
 })
 export class ChangePasswordFreelancerComponent {
-  currentPassword: string = '';
-  newPassword: string = '';
-  confirmPassword: string = '';
-  message: string = '';
+  currentPassword = '';
+  newPassword = '';
+  confirmPassword = '';
+  message= '';
 
   constructor(private router: Router) {}
 

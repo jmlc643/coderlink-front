@@ -13,7 +13,7 @@ import { StorageService } from '../../api/storage-service/storage.service';
 @Component({
   selector: 'app-historial-proyectos-developer',
   standalone: true,
-  imports: [CommonModule, DatePipe, FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './historial-proyectos-developer.component.html',
   styleUrl: './historial-proyectos-developer.component.scss',
   providers: [DatePipe]

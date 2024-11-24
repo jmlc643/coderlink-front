@@ -39,7 +39,7 @@ export class ChangePasswordComponent implements OnInit{
 
   ngOnInit(): void {
     //Recibe el parametro del id enrutado y lo guarda en una variable
-    this.activatedRoute.params.subscribe( prm => {
+    this.activatedRoute.params.subscribe( () => {
       this.changePassword.token = this.activatedRoute.snapshot.params['token'];
     })
   }
