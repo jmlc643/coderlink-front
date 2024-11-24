@@ -19,3 +19,9 @@ export interface CreateCustomerRequest{
     email: string
     password: string
 }
+
+export interface UpdateCustomer{
+    username: string
+    email: string
+    password: string
+}
