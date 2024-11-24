@@ -38,7 +38,6 @@ export class HeaderComponent implements OnInit {
     const user = this.authApiService.getUser(); // Verifica si hay un usuario autenticado
 
     if (!user) {
-      console.warn('Usuario no autenticado. Redirigiendo al login...');
       return; // Evita ejecutar el resto del código
     }
     await this.loadData()
