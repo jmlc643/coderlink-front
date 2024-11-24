@@ -39,7 +39,6 @@ export class HeaderComponent implements OnInit {
 
     if (!user) {
       console.warn('Usuario no autenticado. Redirigiendo al login...');
-      this.router.navigate(['/login']); // Redirige al login si no hay usuario
       return; // Evita ejecutar el resto del código
     }
     await this.loadData()
