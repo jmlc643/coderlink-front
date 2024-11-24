@@ -30,7 +30,6 @@ export class ProfileFreelancerComponent implements OnInit{
   private async loadData(){
     this.username = await this.authApiService.getUser() as AuthResponse
     this.developer = await this.developerApiService.getDeveloper(this.username.username)
-    console.log(this.developer)
   }
 
   router = inject(Router)

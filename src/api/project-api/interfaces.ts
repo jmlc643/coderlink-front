@@ -29,3 +29,8 @@ export interface CreateProjectRequest{
 export interface SearchProjectRequest{
     projectName: string
 }
+
+export interface SetStatus{
+    id: number
+    status: string
+}
