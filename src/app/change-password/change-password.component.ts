@@ -40,7 +40,6 @@ export class ChangePasswordComponent implements OnInit{
   ngOnInit(): void {
     //Recibe el parametro del id enrutado y lo guarda en una variable
     this.activatedRoute.params.subscribe( prm => {
-      console.log(`El token es: ${prm['token']}`);
       this.changePassword.token = this.activatedRoute.snapshot.params['token'];
     })
   }
@@ -63,17 +62,17 @@ export class ChangePasswordComponent implements OnInit{
           console.log(userData)
         },
         error : (errorData: any) => {
-          console.error(errorData);
           if (errorData && errorData.error && errorData.error.message) {
             // Si el error tiene un mensaje, puedes mostrarlo
-            this.formError = errorData.error.message;
+            if(errorData.status == 400){
+              this.formError = "Las contraseñas deben ser iguales"
+            }
           } else {
             // Si no hay un mensaje específico, muestra un mensaje genérico
             this.formError = 'Error al procesar la solicitud';
           }
         },
         complete: () => {
-          console.info("Register completo")
           this.router.navigateByUrl('/login');
           this.resetPassForm.reset();
         }

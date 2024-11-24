@@ -13,6 +13,7 @@ import { AuthResponse } from '../../../api/storage-service/interfaces';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent implements OnInit {
+
   isPrincipalPage: boolean = false;
   isLoggedIn: boolean = false; // Simula si el usuario está logeado o no
   userRole: string = ''; // Almacena el rol del usuario
@@ -59,5 +60,14 @@ export class HeaderComponent implements OnInit {
 
   navigateToLogin() {
     this.router.navigate(['/login']);
+  }
+
+  goToProfile() {
+    if(this.userRole == "Cliente"){
+      this.router.navigate(['/profile-customer']);
+    }
+    if(this.userRole == "Freelancer"){
+      this.router.navigate(['/profile-freelancer']);
+    }
   }
 }

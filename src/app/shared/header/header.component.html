@@ -6,14 +6,14 @@
       </div>
   
       <div class="nav-links">
-        <a [routerLink]="'/freelancer'" *ngIf='userRole == "Cliente"'>Freelancer</a>
-        <a [routerLink]="'/project-section'" *ngIf='userRole == "Freelancer"'>Buscar Proyectos</a>
+        <a [routerLink]="'/freelancer'">Freelancer</a>
+        <a [routerLink]="'/project-section'">Buscar Proyectos</a>
         <a href="#">Contacto</a>
       </div>
   
       <!-- Mostrar el nombre del usuario y el botón de cerrar sesión si está logeado -->
       <div class="auth-buttons" *ngIf="isLoggedIn">
-        <span class="user-name">{{ username.username }} ({{ userRole }})</span>
+        <span class="user-name" (click)="goToProfile()">{{ username.username }} ({{ userRole }})</span>
         <button class="login-btn" (click)="logout()">Cerrar sesión</button>
       </div>
   

@@ -30,7 +30,7 @@ import { customerGuard } from '../guards/customer/customer.guard';
 
 export const routes: Routes = [
   { path: '', component: PrincipalComponent },
-  { path: 'join', component: JoinSelectionComponent },
+  { path: 'join', component: JoinSelectionComponent, canActivate: [authInverseGuard] },
   { path: 'register-client', component: RegisterCustomerComponent, canActivate: [authInverseGuard] },
   { path: 'register-freelancer', component: RegisterFreelancerComponent, canActivate: [authInverseGuard] },
   { path: 'login', component: LoginComponent, canActivate: [authInverseGuard] },
@@ -38,8 +38,8 @@ export const routes: Routes = [
   { path: 'profile-freelancer', component: ProfileFreelancerComponent, canActivate: [authGuard, developerGuard] },
   { path: 'profile-customer', component: ProfileCustomerComponent, canActivate: [authGuard, customerGuard] },
   { path: 'forgot', component: ForgotComponent, canActivate: [authInverseGuard]},
-  { path: 'project-section', component: ProjectSectionComponent, canActivate: [developerGuard]},
-  { path: 'change-password/:token', component: ChangePasswordComponent},
+  { path: 'project-section', component: ProjectSectionComponent},
+  { path: 'change-password/:token', component: ChangePasswordComponent, canActivate: [authInverseGuard]},
   { path: 'edit-profile-customer', component: EditProfileCustomerComponent, canActivate: [authGuard, customerGuard]},
   { path: 'crear-proyecto', component: CrearProyectoComponent, canActivate: [authGuard, customerGuard]},
   { path: 'modify-project/:id', component: ModifyProjectComponent, canActivate: [authGuard, customerGuard]},
