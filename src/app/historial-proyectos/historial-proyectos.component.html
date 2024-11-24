@@ -3,24 +3,24 @@
   <div class="back-button-container"> 
     <button class="btn btn-secondary mb-4" (click)="navigateBack()">Regresar a Perfil</button>
   </div>
-  <div *ngFor="let proyecto of proyectos" class="card-proyecto">
+  <div *ngFor="let project of projects" class="card-proyecto">
     <div class="proyecto-header">
-      <span class="proyecto-nombre">"{{ proyecto.nombre }}"</span>
-      <span [ngClass]="{'activo': proyecto.estado === 'Activo', 'terminado': proyecto.estado === 'Terminado'}">
-        {{ proyecto.estado }}
+      <span class="proyecto-nombre">"{{ project.name }}"</span>
+      <span [ngClass]="{'activo': project.status !== 'COMPLETE', 'terminado': project.status === 'COMPLETE'}">
+        {{ project.status === 'COMPLETE' ? 'Terminado' : 'Activo' }}
       </span>
-      <button class="btn-eliminar" (click)="eliminarProyecto(proyecto.id)">Eliminar</button>
+      <button class="btn-eliminar" (click)="eliminarProyecto(project.id)">Eliminar</button>
     </div>
     
     <div class="proyecto-info">
       <div class="proyecto-fechas">
-        <p>Inicio: {{ proyecto.fechaInicio | date }}</p>
-        <p>Actualizado: {{ proyecto.fechaActualizacion | date }}</p>
+        <p>Inicio: {{ formatDate(project.createdAt.toString()) }}</p>
+        <p>Actualizado: {{ project.updateAt ? formatDate(project.updateAt.toString()) : 'Sin actualizaciones' }}</p>
       </div>
-      <p>Completado: {{ proyecto.progreso }}%</p>
-      <div class="progress-bar">
-        <div class="progress" [style.width]="proyecto.progreso + '%'"></div>
-      </div>
+      <p>Completado: {{ calculateProgress(project.status) }}%</p>
+    <div class="progress-bar">
+      <div class="progress" [style.width]="calculateProgress(project.status) + '%'"></div>
+    </div>
     </div>
   </div>
 </div>  

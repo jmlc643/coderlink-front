@@ -23,8 +23,8 @@ export class ProjectApiService {
     return lastValueFrom(this.httpClient.get<Project>(environment.urlBack+"/project/get-project/"+id))
   }
 
-  deleteProject(id: number): void{
-    lastValueFrom(this.httpClient.delete<Project[]>(environment.urlBack + '/project/delete/'+id))
+  deleteProject(id: number) {
+    return lastValueFrom(this.httpClient.delete<Project[]>(environment.urlBack + '/project/delete/'+id))
   }
 
   searchProject(projectName: SearchProjectRequest){
