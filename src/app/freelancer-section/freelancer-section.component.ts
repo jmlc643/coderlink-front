@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { NgFor,NgIf,NgClass } from '@angular/common';
+import { NgFor,NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DeveloperApiService } from '../../api/developer-api/developer-api.service';
@@ -31,7 +31,7 @@ export class FreelancerSectionComponent implements OnInit{
   private async loadData(){
     this.freelancers = await this.freelancerApiService.listDevelopers()
     const username = this.authApiService.getUser()?.username;
-    this.customerApiService.getCustomer(username as string).then(response => {
+    await this.customerApiService.getCustomer(username as string).then(response => {
       this.favorites = response.favoritesDevs; // IDs de los favoritos
   });
   }
@@ -60,7 +60,7 @@ export class FreelancerSectionComponent implements OnInit{
 
   // Método para manejar el filtrado (ejemplo simple)
   filterFreelancers() {
-    
+    //
   }
 
   // Método para ver el perfil del freelancer

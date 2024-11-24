@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { NgFor,NgIf } from '@angular/common';
+import { NgFor} from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { Project, SearchProjectRequest } from '../../api/project-api/interfaces';
 import { ProjectApiService } from '../../api/project-api/project-api.service';
@@ -29,7 +29,7 @@ export class ProjectSectionComponent implements OnInit{
     status: false,
     role: ""
   }
-  projectName: string = ''
+  projectName = ''
   searchRequest: SearchProjectRequest = {
     projectName : ''
   }
@@ -47,7 +47,7 @@ export class ProjectSectionComponent implements OnInit{
   private async loadData(){
     try {
       this.projects = await this.projectApiService.getProjects();
-      const user = this.authApiService.getUser(); // Devuelve AuthResponse | null
+      const user = await this.authApiService.getUser(); // Devuelve AuthResponse | null
       if (user) {
         this.username = user;
       } else {
