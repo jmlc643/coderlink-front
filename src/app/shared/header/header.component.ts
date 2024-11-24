@@ -2,8 +2,8 @@ import { Component,inject,OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Router } from '@angular/router';
 import { NgIf } from '@angular/common';
-import { GetAuthorites, GetUserResponse } from '../../../api/auth-api/interfaces';
 import { AuthApiService } from '../../../api/auth-api/auth-api.service';
+import { AuthResponse } from '../../../api/storage-service/interfaces';
 
 @Component({
   selector: 'app-header',
@@ -15,15 +15,14 @@ import { AuthApiService } from '../../../api/auth-api/auth-api.service';
 export class HeaderComponent implements OnInit {
   isPrincipalPage: boolean = false;
   isLoggedIn: boolean = false; // Simula si el usuario está logeado o no
-  userName: string = ''; // Almacena el nombre del usuario
   userRole: string = ''; // Almacena el rol del usuario
   token: string = ""
-  username: GetUserResponse = {
-    username : ''
-  }
-
-  role: GetAuthorites = {
-    authorities: ''
+  username: AuthResponse ={
+    username: "",
+    message: "",
+    token: "",
+    status: false,
+    role: ""
   }
 
   authApiService = inject(AuthApiService)
@@ -35,29 +34,22 @@ export class HeaderComponent implements OnInit {
     this.router.events.subscribe(() => {
       this.isPrincipalPage = this.router.url === '/' || this.router.url === '/principal';
     });
-    this.token = this.authApiService.userToken
     await this.loadData()
-    if(this.userName != ""){
-      this.isLoggedIn = true
-    }
+    this.isLoggedIn = this.authApiService.isAuthenticated()
   }
 
   private async loadData(){
-    this.username = await this.authApiService.getUserByToken(this.token)
-    this.userName = this.username.username
-    this.role = await this.authApiService.getAuthoritiesByToken(this.token)
-    if(this.role.authorities == "[ROLE_CUSTOMER]"){
-      this.userRole = "Cliente"
+    this.username = await this.authApiService.getUser() as AuthResponse
+    if(this.authApiService.getUserRole() == "[ROLE_CUSTOMER]"){
+      this.userRole = "Cliente" 
     }
-    if(this.role.authorities == "[ROLE_DEVELOPER]"){
+    if(this.authApiService.getUserRole() == "[ROLE_DEVELOPER]"){
       this.userRole = "Freelancer"
     }
   }
 
   logout() {
-    this.isLoggedIn = false;
-    this.userName = '';
-    this.userRole = '';
+    this.authApiService.logout()
     this.router.navigate(['/login']); // Redirige a login tras cerrar sesión
   }
 

@@ -5,10 +5,10 @@ import { Project, SearchProjectRequest } from '../../api/project-api/interfaces'
 import { ProjectApiService } from '../../api/project-api/project-api.service';
 import { FormsModule } from '@angular/forms';
 import { AuthApiService } from '../../api/auth-api/auth-api.service';
-import { GetUserResponse } from '../../api/auth-api/interfaces';
 import { PostulationApiService } from '../../api/postulation-api/postulation-api.service';
 import { Router } from '@angular/router';
 import { CreatePostulationRequests } from '../../api/postulation-api/interfaces';
+import { AuthResponse } from '../../api/storage-service/interfaces';
 
 @Component({
   selector: 'app-project-section',
@@ -22,9 +22,12 @@ export class ProjectSectionComponent implements OnInit{
   authApiService = inject(AuthApiService)
   postulationApiService = inject(PostulationApiService)
   router = inject(Router)
-  token = ''
-  username : GetUserResponse = {
-    username: ''
+  username: AuthResponse ={
+    username: "",
+    message: "",
+    token: "",
+    status: false,
+    role: ""
   }
   projectName: string = ''
   searchRequest: SearchProjectRequest = {
@@ -42,8 +45,7 @@ export class ProjectSectionComponent implements OnInit{
 
   private async loadData(){
     this.projects = await this.projectApiService.getProjects()
-    this.token = await this.authApiService.userToken
-    this.username = await this.authApiService.getUserByToken(this.token)
+    this.username = await this.authApiService.getUser() as AuthResponse
   }
 
   async search(){

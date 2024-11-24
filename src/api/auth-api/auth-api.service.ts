@@ -1,47 +1,22 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, lastValueFrom, map, Observable, tap, throwError } from 'rxjs';
-import { CreateCustomerRequest, Customer } from '../customer-api/interfaces';
+import { Observable, tap } from 'rxjs';
+import { CreateCustomerRequest,} from '../customer-api/interfaces';
 import { environment } from '../../environments/environment.development';
 import { CreateDeveloperRequest } from '../developer-api/interfaces';
-import { AuthenticationUserRequest, ChangePasswordRequest, GetAuthorites, GetUserResponse, RecoveryPasswordRequest } from './interfaces';
+import { AuthenticationUserRequest, ChangePasswordRequest, RecoveryPasswordRequest } from './interfaces';
+import { StorageService } from '../storage-service/storage.service';
+import { AuthResponse } from '../storage-service/interfaces';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthApiService {
 
-  currentUserData : BehaviorSubject<string> = new BehaviorSubject<string>("");
-  currentUserLoginOn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-
   httpClient = inject(HttpClient);
+  storageService = inject(StorageService)
 
-  constructor() {
-    const token = typeof window !== 'undefined' ? sessionStorage.getItem("token") : null;
-    this.currentUserLoginOn = new BehaviorSubject<boolean>(token != null);
-    this.currentUserData = new BehaviorSubject<string>(token || "");
-  }
-
-  private handleError(error:HttpErrorResponse){
-    if(error.status===0){
-      console.error('Se ha producido un error '+error.error);
-    }else{
-      console.error('Backend retorno el código del estado '+error.message);
-      console.log(this.userData);
-    }return throwError(() => new Error('Error al iniciar sesión. Revise los datos enviados'));
-  }
-
-  get userData():Observable<String>{
-    return this.currentUserData.asObservable();
-  }
-
-  get userLoginOn(): Observable<boolean>{
-    return this.currentUserLoginOn.asObservable();
-  }
-
-  get userToken(): string{
-    return this.currentUserData.value;
-  }
+  constructor() {}
 
   registerCustomer(customer: CreateCustomerRequest):Observable<any>{
     return this.httpClient.post<any>(environment.urlBack+'/auth/register/customer/', customer)
@@ -52,42 +27,34 @@ export class AuthApiService {
   }
 
   login(user: AuthenticationUserRequest): Observable<any> {
-    return this.httpClient.post<any>(environment.urlBack + '/auth/login/', user).pipe(
-      tap((userData) => {
-        if (typeof window !== 'undefined') {
-          sessionStorage.setItem("token", userData.token);
-        }
-        this.currentUserData.next(userData.token);
-        this.currentUserLoginOn.next(true);
-      }),
-      map((userData) => userData.token),
-      catchError(this.handleError)
-    );
+    return this.httpClient.post<any>(environment.urlBack + '/auth/login/', user)
+    .pipe(tap(response => this.storageService.setAuthData(response)));
   }
   
 
   logout(){
-    sessionStorage.removeItem("token");
-    this.currentUserLoginOn.next(false);
+    this.storageService.clearAuthData()
   }
 
   recoveryPassword(recoveryPassword: RecoveryPasswordRequest):Observable<any>{
-    return this.httpClient.post<any>(environment.urlBack + '/auth/recovery-password/', recoveryPassword).pipe(
-      catchError(this.handleError)
-    )
+    return this.httpClient.post<any>(environment.urlBack + '/auth/recovery-password/', recoveryPassword)
   }
 
   resetPass(changePassword: ChangePasswordRequest):Observable<any>{
-    return this.httpClient.post<any>(environment.urlBack+'/auth/change-password/',changePassword).pipe(
-      catchError(this.handleError)
-    );
+    return this.httpClient.post<any>(environment.urlBack+'/auth/change-password/',changePassword);
   }
 
-  getUserByToken(token: string){
-    return lastValueFrom(this.httpClient.post<GetUserResponse>(environment.urlBack+'/auth/get-user-token/',token))
+  isAuthenticated(): boolean {
+    return this.storageService.getAuthData() !== null;
   }
 
-  getAuthoritiesByToken(token: string){
-    return lastValueFrom(this.httpClient.post<GetAuthorites>(environment.urlBack + '/auth/get-authorities-token/', token))
+  getUser(): AuthResponse | null {
+    const authData = this.storageService.getAuthData();
+    return authData ? authData : null;
+  }
+
+  getUserRole(): string | null {
+    const authData = this.storageService.getAuthData();
+    return authData ? authData.role : null;
   }
 }

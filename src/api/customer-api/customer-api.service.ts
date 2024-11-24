@@ -14,34 +14,10 @@ export class CustomerApiService {
 
   httpClient = inject(HttpClient);
 
-  constructor() {
-    this.currentUserLoginOn = new BehaviorSubject<boolean>(sessionStorage.getItem("token")!=null);
-    this.currentUserData = new BehaviorSubject<string>(sessionStorage.getItem("token")||"");
-  }
-
-  private handleError(error:HttpErrorResponse){
-    if(error.status===0){
-      console.error('Se ha producido un error '+error.error);
-    }else{
-      console.error('Backend retorno el código del estado '+error.message);
-      console.log(this.userData);
-    }return throwError(() => new Error('Error al iniciar sesión. Revise los datos enviados'));
-  }
+  constructor() {}
 
   listCustomers(){
     return lastValueFrom(this.httpClient.get<Customer[]>(environment.urlBack+'/customer/list/'))
-  }
-
-  get userData():Observable<String>{
-    return this.currentUserData.asObservable();
-  }
-
-  get userLoginOn(): Observable<boolean>{
-    return this.currentUserLoginOn.asObservable();
-  }
-
-  get userToken(): string{
-    return this.currentUserData.value;
   }
 
   getCustomer(username: string){

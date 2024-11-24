@@ -6,8 +6,8 @@ import { Postulation } from '../../api/postulation-api/interfaces';
 import { PostulationApiService } from '../../api/postulation-api/postulation-api.service';
 import { CreateJobOfferRequest } from '../../api/offer-api/interfaces';
 import { AuthApiService } from '../../api/auth-api/auth-api.service';
-import { GetUserResponse } from '../../api/auth-api/interfaces';
 import { OfferApiService } from '../../api/offer-api/offer-api.service';
+import { AuthResponse } from '../../api/storage-service/interfaces';
 @Component({
   selector: 'app-hire-developer',
   standalone: true,
@@ -29,9 +29,12 @@ export class HireDeveloperComponent implements OnInit {
     customerUsername: '',
     postulationId: 0
   }
-  token = ''
-  username: GetUserResponse ={
-    username: ''
+  username: AuthResponse ={
+    username: "",
+    message: "",
+    token: "",
+    status: false,
+    role: ""
   }
 
   hireForm = this.formBuilder.group({
@@ -57,8 +60,7 @@ export class HireDeveloperComponent implements OnInit {
 
   private async loadData(){
     this.postulation = await this.postulationApiService.getPostulation(this.idd)
-    this.token = this.authApiService.userToken
-    this.username = await this.authApiService.getUserByToken(this.token)
+    this.username = await this.authApiService.getUser() as AuthResponse
   }
 
   onSubmit(): void {

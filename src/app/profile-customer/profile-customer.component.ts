@@ -4,7 +4,7 @@ import { NgForOf,NgIf } from '@angular/common';
 import { CustomerApiService } from '../../api/customer-api/customer-api.service';
 import { Customer } from '../../api/customer-api/interfaces';
 import { AuthApiService } from '../../api/auth-api/auth-api.service';
-import { GetUserResponse } from '../../api/auth-api/interfaces';
+import { AuthResponse } from '../../api/storage-service/interfaces';
 
 
 @Component({
@@ -21,18 +21,21 @@ export class ProfileCustomerComponent implements OnInit{
 
   customer?:Customer
   token: string = ""
-  username: GetUserResponse = {
-    username : ''
+  username: AuthResponse ={
+    username: "",
+    message: "",
+    token: "",
+    status: false,
+    role: ""
   }
 
   constructor(private router: Router) {}
   ngOnInit(): void {
-    this.token = this.authApiService.userToken
     this.loadData()
   }
 
   private async loadData(){
-    this.username = await this.authApiService.getUserByToken(this.token)
+    this.username = await this.authApiService.getUser() as AuthResponse
     this.customer = await this.customerApiService.getCustomer(this.username.username)
     console.log(this.customer)
   }

@@ -3,9 +3,9 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule} from '@angular
 import { Router } from '@angular/router';
 import { CreateProjectRequest } from '../../api/project-api/interfaces';
 import { AuthApiService } from '../../api/auth-api/auth-api.service';
-import { GetUserResponse } from '../../api/auth-api/interfaces';
 import { ProjectApiService } from '../../api/project-api/project-api.service';
 import { NgIf } from '@angular/common';
+import { AuthResponse } from '../../api/storage-service/interfaces';
 
 @Component({
   selector: 'app-crear-proyecto',
@@ -16,13 +16,13 @@ import { NgIf } from '@angular/common';
 })
 export class CrearProyectoComponent implements OnInit{
   
-  userLoginOn: boolean = false;
-  usuarioLogeado : any = {};
-  token: string = ''
-  username: GetUserResponse = {
-    username: ''
+  username: AuthResponse ={
+    username: "",
+    message: "",
+    token: "",
+    status: false,
+    role: ""
   }
-
   authApiService = inject(AuthApiService)
   projectApiService = inject(ProjectApiService)
 
@@ -53,13 +53,11 @@ export class CrearProyectoComponent implements OnInit{
   });
   
   ngOnInit(): void {
-    this.token = this.authApiService.userToken
     this.loadData()
   }
 
   private async loadData(){
-    this.username = await this.authApiService.getUserByToken(this.token)
-    console.log(this.username.username)
+    this.username = await this.authApiService.getUser() as AuthResponse
   }
 
   get nombre(){

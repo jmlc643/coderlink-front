@@ -22,30 +22,34 @@ import { SolicitarCambiosComponent } from './solicitar-cambios/solicitar-cambios
 import { EditProfileFreelancerComponent } from './edit-profile-freelancer/edit-profile-freelancer.component';
 import { ChangePasswordFreelancerComponent } from './change-password-freelancer/change-password-freelancer.component';
 import { VerDesarrolladoresFavoritosComponent } from './ver-desarrolladores-favoritos/ver-desarrolladores-favoritos.component';
+import { authGuard } from '../guards/auth/auth.guard';
+import { authInverseGuard } from '../guards/auth/auth-inverse.guard';
+import { developerGuard } from '../guards/developer/developer.guard';
+import { customerGuard } from '../guards/customer/customer.guard';
 
 
 export const routes: Routes = [
   { path: '', component: PrincipalComponent },
   { path: 'join', component: JoinSelectionComponent },
-  { path: 'register-client', component: RegisterCustomerComponent },
-  { path: 'register-freelancer', component: RegisterFreelancerComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'freelancer', component: FreelancerSectionComponent },
-  { path: 'profile-freelancer', component: ProfileFreelancerComponent },
-  { path: 'profile-customer', component: ProfileCustomerComponent },
-  { path: 'forgot', component: ForgotComponent},
-  { path: 'project-section', component: ProjectSectionComponent},
+  { path: 'register-client', component: RegisterCustomerComponent, canActivate: [authInverseGuard] },
+  { path: 'register-freelancer', component: RegisterFreelancerComponent, canActivate: [authInverseGuard] },
+  { path: 'login', component: LoginComponent, canActivate: [authInverseGuard] },
+  { path: 'freelancer', component: FreelancerSectionComponent, canActivate: [customerGuard] },
+  { path: 'profile-freelancer', component: ProfileFreelancerComponent, canActivate: [authGuard, developerGuard] },
+  { path: 'profile-customer', component: ProfileCustomerComponent, canActivate: [authGuard, customerGuard] },
+  { path: 'forgot', component: ForgotComponent, canActivate: [authInverseGuard]},
+  { path: 'project-section', component: ProjectSectionComponent, canActivate: [developerGuard]},
   { path: 'change-password/:token', component: ChangePasswordComponent},
-  { path: 'edit-profile-customer', component: EditProfileCustomerComponent},
-  { path: 'crear-proyecto', component: CrearProyectoComponent},
-  { path: 'modify-project/:id', component: ModifyProjectComponent},
+  { path: 'edit-profile-customer', component: EditProfileCustomerComponent, canActivate: [authGuard, customerGuard]},
+  { path: 'crear-proyecto', component: CrearProyectoComponent, canActivate: [authGuard, customerGuard]},
+  { path: 'modify-project/:id', component: ModifyProjectComponent, canActivate: [authGuard, customerGuard]},
   { path: 'view-project/:id', component: ViewProjectComponent},
-  { path: 'hire-developer/:id', component: HireDeveloperComponent},
+  { path: 'hire-developer/:id', component: HireDeveloperComponent, canActivate: [authGuard, customerGuard]},
   { path: 'revisar-portafolios-freelancer', component: RevisarPortafoliosFreelancerComponent},
-  { path: 'historial-proyectos', component: HistorialProyectosComponent},
-  { path: 'ver-desarrolladores-favoritos', component: VerDesarrolladoresFavoritosComponent },
-  { path: 'developer-historial-proyectos', component: HistorialProyectosDeveloperComponent},
-  { path: 'solicitar-cambios', component: SolicitarCambiosComponent},
-  { path: 'edit-profile-freelancer', component: EditProfileFreelancerComponent},
-  { path: 'change-password-freelancer', component: ChangePasswordFreelancerComponent},
+  { path: 'historial-proyectos', component: HistorialProyectosComponent, canActivate: [authGuard, customerGuard]},
+  { path: 'ver-desarrolladores-favoritos', component: VerDesarrolladoresFavoritosComponent, canActivate: [authGuard, developerGuard] },
+  { path: 'developer-historial-proyectos', component: HistorialProyectosDeveloperComponent, canActivate: [authGuard, developerGuard]},
+  { path: 'solicitar-cambios', component: SolicitarCambiosComponent, canActivate: [authGuard, customerGuard]},
+  { path: 'edit-profile-freelancer', component: EditProfileFreelancerComponent, canActivate: [authGuard, developerGuard]},
+  { path: 'change-password-freelancer', component: ChangePasswordFreelancerComponent, canActivate: [authInverseGuard]},
 ];
