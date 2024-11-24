@@ -12,10 +12,8 @@ export interface Customer{
 
 export interface CreateCustomerRequest{
     username: string
-    dni: number
     names: string
     lastName: string
     email: string
     password: string
-    typeUser: string
 }

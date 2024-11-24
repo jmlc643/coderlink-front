@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms'; // Importa FormsModule aquí
 import { AppComponent } from '../app.component';
 import { PrincipalComponent } from '../principal/principal.component';
 import { JoinSelectionComponent } from '../join-selection/join-selection.component';
-import { RegisterCustomerComponent } from '../register-customer/register-customer.component'; // Importar el componente
+import { RegisterCustomerComponent } from '../register-c/register-c.component'; // Importar el componente
 import { RegisterFreelancerComponent } from '../register-freelancer/register-freelancer.component';
 import { LoginComponent } from '../login/login.component';
 import { routes } from '../app.routes';

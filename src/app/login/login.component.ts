@@ -66,11 +66,7 @@ export class LoginComponent {
       this.loginError="";
       this.authRequest.username = this.loginForm.controls.username.value as string
       this.authRequest.password = this.loginForm.controls.password.value as string
-      console.log("Llamando al servicio de autenticar sesion "+this.loginForm);
       this.authApiService.login(this.authRequest).subscribe({
-        next: (userData) => {
-          console.log(userData)
-        },
         error : (errorData: any) => {
           console.error(errorData);
           this.loginError="Credenciales invalidas";

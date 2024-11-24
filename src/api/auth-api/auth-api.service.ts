@@ -54,7 +54,6 @@ export class AuthApiService {
   login(user: AuthenticationUserRequest): Observable<any> {
     return this.httpClient.post<any>(environment.urlBack + '/auth/login/', user).pipe(
       tap((userData) => {
-        console.log("User Data : " + userData);
         if (typeof window !== 'undefined') {
           sessionStorage.setItem("token", userData.token);
         }

@@ -14,7 +14,7 @@
       <!-- Mostrar el nombre del usuario y el botón de cerrar sesión si está logeado -->
       <div class="auth-buttons" *ngIf="isLoggedIn">
         <span class="user-name">{{ userName }} ({{ userRole }})</span>
-        <button class="logout-btn" (click)="logout()">Cerrar sesión</button>
+        <button class="login-btn" (click)="logout()">Cerrar sesión</button>
       </div>
   
       <!-- Mostrar botones de login y registrarse si NO está logeado -->

@@ -10,6 +10,7 @@ export interface Project{
     category: string;
     qualification: string;
     createdAt: Date;
+    budget: number;
     postulations: Postulation[];
 }
 

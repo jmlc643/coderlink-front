@@ -36,8 +36,8 @@ export class HeaderComponent implements OnInit {
       this.isPrincipalPage = this.router.url === '/' || this.router.url === '/principal';
     });
     this.token = this.authApiService.userToken
-    this.loadData()
-    if(this.userName != ''){
+    await this.loadData()
+    if(this.userName != ""){
       this.isLoggedIn = true
     }
   }
@@ -46,7 +46,12 @@ export class HeaderComponent implements OnInit {
     this.username = await this.authApiService.getUserByToken(this.token)
     this.userName = this.username.username
     this.role = await this.authApiService.getAuthoritiesByToken(this.token)
-    this.userRole = this.role.authorities
+    if(this.role.authorities == "[ROLE_CUSTOMER]"){
+      this.userRole = "Cliente"
+    }
+    if(this.role.authorities == "[ROLE_DEVELOPER]"){
+      this.userRole = "Freelancer"
+    }
   }
 
   logout() {

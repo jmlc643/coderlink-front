@@ -20,10 +20,8 @@ export class RegisterCustomerComponent {
     names: '',
     lastName: '',
     username: '',
-    dni: 1,
     email: '',
     password: '',
-    typeUser: 'CUSTOMER',
   }
 
   // Variable to errors
@@ -102,6 +100,11 @@ export class RegisterCustomerComponent {
 
   register() {
     if(this.registerForm.valid){
+      if(this.registerForm.controls.confirmPassword != this.registerForm.controls.confirmPassword){
+        console.error(`La contraseña ${this.registerForm.controls.confirmPassword} no es igual a ${this.registerForm.controls.confirmPassword}`)
+        this.formError = "Las contraseñas deben ser iguales"
+        return;
+      }
       // Obtain values of formGroup
       let namesControl = this.registerForm.controls.firstName.value as string
       let lastNameControl = this.registerForm.controls.lastName.value as string
@@ -127,6 +130,7 @@ export class RegisterCustomerComponent {
         },
         complete: () => {
           console.info("Register succesfuly")
+          this.formError = "";
           this.showSuccessModal = true;
           this.registerForm.reset();
         }
