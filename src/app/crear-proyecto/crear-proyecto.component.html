@@ -42,7 +42,7 @@
       <input formControlName="categoria" type="text" id="categoria" formControlName="categoria" required>
       <div *ngIf="proyectoForm.get('categoria')?.hasError('required') || proyectoForm.get('categoria')?.hasError('maxlength')">
         <div *ngIf="proyectoForm.get('categoria')?.hasError('required')">
-            El nombre es requerido
+            La categoría es requerido
         </div>
       </div>
 

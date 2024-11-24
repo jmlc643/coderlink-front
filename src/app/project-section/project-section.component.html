@@ -3,8 +3,8 @@
     <div class="logo">
     </div>
     <div class="search-bar">
-      <input type="text" placeholder="Buscar trabajos..." />
-      <button>Buscar</button>
+      <input type="text" placeholder="Buscar trabajos..."  [(ngModel)]="projectName"/>
+      <button (click)="search()">Buscar</button>
     </div>
   </header>
 
@@ -44,16 +44,21 @@
       <button class="apply-filters-btn">Aplicar Filtros</button>
     </aside>
 
-    <section class="jobs-listing">
+    <section class="jobs-listing" *ngIf="!loading; else loadingTemplate">
       <div class="job-card" *ngFor="let project of projects">
         <h3>{{ project.name }}</h3>
         <p>{{ project.description }}</p>
         <div class="job-details">
           <span>Categoría: {{ project.category }}</span>
+          <br>
           <span>Calificación: {{ project.qualification }}</span>
         </div>
-        <button (click)="postulation(project.id)">Postularse</button>
+        <button *ngIf='username.role == "[ROLE_DEVELOPER]"' (click)="postulation(project.id)">Postularse</button>
       </div>
     </section>
+
+    <ng-template #loadingTemplate>
+      <p>Cargando proyectos...</p>
+    </ng-template>
   </div>
 </div>

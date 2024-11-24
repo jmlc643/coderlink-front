@@ -38,14 +38,26 @@ export class ProjectSectionComponent implements OnInit{
     idProject: 0
   }
   
-  ngOnInit(): void {
-    this.loadData()
+  async ngOnInit() {
+    await this.loadData()
   }
   projects: Project[] = []
+  loading = true
 
   private async loadData(){
-    this.projects = await this.projectApiService.getProjects()
-    this.username = await this.authApiService.getUser() as AuthResponse
+    try {
+      this.projects = await this.projectApiService.getProjects();
+      const user = this.authApiService.getUser(); // Devuelve AuthResponse | null
+      if (user) {
+        this.username = user;
+      } else {
+        console.error('No se encontró un usuario autenticado.');
+      }
+    } catch (error) {
+      console.error('Error al cargar datos:', error);
+    } finally {
+      this.loading = false;
+    }
   }
 
   async search(){

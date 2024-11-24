@@ -7,7 +7,6 @@ import { FreelancerSectionComponent } from './freelancer-section/freelancer-sect
 import { ProfileFreelancerComponent } from './profile-freelancer/profile-freelancer.component';
 import { ProfileCustomerComponent } from './profile-customer/profile-customer.component';
 import { ForgotComponent } from './forgot/forgot.component';
-import { ProjectSectionComponent } from './project-section/project-section.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { EditProfileCustomerComponent } from './edit-profile-customer/edit-profile-customer.component';
 import { CrearProyectoComponent } from './crear-proyecto/crear-proyecto.component';
@@ -30,26 +29,54 @@ import { customerGuard } from '../guards/customer/customer.guard';
 
 export const routes: Routes = [
   { path: '', component: PrincipalComponent },
-  { path: 'join', component: JoinSelectionComponent, canActivate: [authInverseGuard] },
-  { path: 'register-client', component: RegisterCustomerComponent, canActivate: [authInverseGuard] },
-  { path: 'register-freelancer', component: RegisterFreelancerComponent, canActivate: [authInverseGuard] },
-  { path: 'login', component: LoginComponent, canActivate: [authInverseGuard] },
-  { path: 'freelancer', component: FreelancerSectionComponent},
-  { path: 'profile-freelancer', component: ProfileFreelancerComponent, canActivate: [authGuard, developerGuard] },
-  { path: 'profile-customer', component: ProfileCustomerComponent, canActivate: [authGuard, customerGuard] },
-  { path: 'forgot', component: ForgotComponent, canActivate: [authInverseGuard]},
-  { path: 'project-section', component: ProjectSectionComponent},
-  { path: 'change-password/:token', component: ChangePasswordComponent, canActivate: [authInverseGuard]},
-  { path: 'edit-profile-customer', component: EditProfileCustomerComponent, canActivate: [authGuard, customerGuard]},
-  { path: 'crear-proyecto', component: CrearProyectoComponent, canActivate: [authGuard, customerGuard]},
-  { path: 'modify-project/:id', component: ModifyProjectComponent, canActivate: [authGuard, customerGuard]},
-  { path: 'view-project/:id', component: ViewProjectComponent},
-  { path: 'hire-developer/:id', component: HireDeveloperComponent, canActivate: [authGuard, customerGuard]},
-  { path: 'revisar-portafolios-freelancer/:username', component: RevisarPortafoliosFreelancerComponent},
-  { path: 'historial-proyectos', component: HistorialProyectosComponent, canActivate: [authGuard, customerGuard]},
-  { path: 'ver-desarrolladores-favoritos', component: VerDesarrolladoresFavoritosComponent, canActivate: [authGuard] },
-  { path: 'developer-historial-proyectos', component: HistorialProyectosDeveloperComponent, canActivate: [authGuard, developerGuard]},
-  { path: 'solicitar-cambios', component: SolicitarCambiosComponent, canActivate: [authGuard, customerGuard]},
-  { path: 'edit-profile-freelancer', component: EditProfileFreelancerComponent, canActivate: [authGuard, developerGuard]},
-  { path: 'change-password-freelancer', component: ChangePasswordFreelancerComponent, canActivate: [authInverseGuard]},
+  // Rutas de autenticación (inverso)
+  {
+    path: '',
+    canActivate: [authInverseGuard],
+    children: [
+      { path: 'join', component: JoinSelectionComponent },
+      { path: 'register-client', component: RegisterCustomerComponent },
+      { path: 'register-freelancer', component: RegisterFreelancerComponent },
+      { path: 'login', component: LoginComponent },
+      { path: 'forgot', component: ForgotComponent },
+      { path: 'change-password/:token', component: ChangePasswordComponent },
+      { path: 'change-password-freelancer', component: ChangePasswordFreelancerComponent },
+    ],
+  },
+
+  // Rutas de Freelancer
+  {
+    path: '',
+    canActivate: [authGuard, developerGuard],
+    children: [
+      { path: 'profile-freelancer', component: ProfileFreelancerComponent },
+      { path: 'edit-profile-freelancer', component: EditProfileFreelancerComponent },
+      { path: 'developer-historial-proyectos', component: HistorialProyectosDeveloperComponent },
+    ],
+  },
+  { path: 'freelancer', component: FreelancerSectionComponent },
+
+  // Rutas de Cliente
+  {
+    path: '',
+    canActivate: [authGuard, customerGuard],
+    children: [
+      { path: 'profile-customer', component: ProfileCustomerComponent },
+      { path: 'edit-profile-customer', component: EditProfileCustomerComponent },
+      { path: 'crear-proyecto', component: CrearProyectoComponent },
+      { path: 'modify-project/:id', component: ModifyProjectComponent },
+      { path: 'historial-proyectos', component: HistorialProyectosComponent },
+      { path: 'solicitar-cambios', component: SolicitarCambiosComponent },
+      { path: 'ver-desarrolladores-favoritos', component: VerDesarrolladoresFavoritosComponent },
+      { path: 'hire-developer/:id', component: HireDeveloperComponent },
+    ],
+  },
+
+  // Rutas comunes
+  { path: 'project-section', loadComponent: () => import('./project-section/project-section.component').then(m => m.ProjectSectionComponent) },
+  { path: 'view-project/:id', component: ViewProjectComponent },
+  { path: 'revisar-portafolios-freelancer/:username', component: RevisarPortafoliosFreelancerComponent },
+
+  // Redirección y rutas no encontradas
+  { path: '**', redirectTo: '/' },
 ];

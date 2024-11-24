@@ -49,7 +49,7 @@ export class CrearProyectoComponent implements OnInit{
       revision: ['', Validators.required],
       categoria: ['', Validators.required],
       calificacion: ['1', Validators.required],
-      tarifa: ['', [Validators.required, Validators.min(1)]]
+      tarifa: [1, [Validators.required, Validators.min(1)]]
   });
   
   ngOnInit(): void {
@@ -102,6 +102,7 @@ export class CrearProyectoComponent implements OnInit{
       this.createProjectRequest.revision = this.proyectoForm.controls.revision.value as string
       this.createProjectRequest.qualification = this.proyectoForm.controls.calificacion.value as string
       this.createProjectRequest.category = this.proyectoForm.controls.categoria.value as string
+      this.createProjectRequest.budget = this.proyectoForm.controls.tarifa.value as number
       this.createProjectRequest.username = this.username.username
         this.projectApiService.createProject(this.createProjectRequest).subscribe({
           next: (projectData) => {
