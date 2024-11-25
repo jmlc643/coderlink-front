@@ -53,7 +53,7 @@
           <br>
           <span>Calificación: {{ project.qualification }}</span>
         </div>
-        <button *ngIf='username.role == "[ROLE_DEVELOPER]"' (click)="postulation(project.id)">Postularse</button>
+        <button *ngIf='username.role === "[ROLE_DEVELOPER]"' (click)="postulation(project.id)">Postularse</button>
       </div>
     </section>
 

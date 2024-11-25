@@ -40,6 +40,7 @@ export class ProjectSectionComponent implements OnInit{
   
   async ngOnInit() {
     await this.loadData()
+    await this.filterProjects()
   }
   projects: Project[] = []
   loading = true
@@ -60,10 +61,21 @@ export class ProjectSectionComponent implements OnInit{
     }
   }
 
+  private async filterProjects(){
+    const filteredProjects = await Promise.all(
+      this.projects.map(async (project) => {
+        const postulations = project.postulations;
+        const hasAcceptedPostulation = postulations.some(postulation => postulation.status === 'ACEPTED');
+        return hasAcceptedPostulation ? null : project;
+      })
+    );
+    // Asignar los proyectos filtrados (eliminando los valores null)
+    this.projects = filteredProjects.filter(project => project !== null) as Project[];
+  }
+
   async search(){
     this.searchRequest.projectName = this.projectName
     this.projects = await this.projectApiService.searchProject(this.searchRequest)
-    console.log(this.projects)
   }
 
   postulation(id:number){

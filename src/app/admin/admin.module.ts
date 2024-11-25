@@ -19,7 +19,6 @@ import { EditProfileCustomerComponent } from '../edit-profile-customer/edit-prof
 import { CrearProyectoComponent } from '../crear-proyecto/crear-proyecto.component';
 import { ModifyProjectComponent } from '../modify-project/modify-project.component';
 import { ViewProjectComponent } from '../view-project/view-project.component';
-import { HireDeveloperComponent } from '../hire-developer/hire-developer.component';
 import { HeaderComponent } from '../shared/header/header.component';
 import { RevisarPortafoliosFreelancerComponent } from '../revisar-portafolios-freelancer/revisar-portafolios-freelancer.component';
 import { HistorialProyectosComponent } from '../historial-proyectos/historial-proyectos.component';
@@ -40,17 +39,13 @@ import { SolicitarCambiosComponent } from '../solicitar-cambios/solicitar-cambio
     ForgotComponent,
     ProjectSectionComponent,
     ChangePasswordComponent,
-    ProfileFreelancerVistaCComponent,
-    ProfileCustomerVistaDComponent,
     EditProfileCustomerComponent,
     CrearProyectoComponent,
     ModifyProjectComponent,
     ViewProjectComponent,
-    HireDeveloperComponent,
     HeaderComponent,
     RevisarPortafoliosFreelancerComponent,
     HistorialProyectosComponent,
-    ReactiveFormsModule,
     HistorialProyectosDeveloperComponent,
     SolicitarCambiosComponent,
   ],

@@ -1,12 +1,14 @@
 /* Página de perfil */
 .profile-page {
-  height: 100vh; /* Ocupa toda la pantalla */
+  min-height: 100vh; /* Ocupa toda la pantalla si el contenido es menor */
   display: flex;
-  justify-content: center;
+  flex-direction: column; /* Asegura que el encabezado no sea cubierto */
   align-items: center;
-  background-color: #6fa1a4; 
-  position: relative;
+  background-color: #6fa1a4;
+  padding: 20px; /* Espaciado general para evitar solapamiento */
+  box-sizing: border-box;
 }
+
 /* Botón de regresar en la parte superior izquierda */
 .back-home-btn {
   position: absolute;
@@ -20,169 +22,164 @@
   font-size: 1rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  
-  &:hover {
-    background-color: darken(#007bff, 10%);
-  }
 }
+
+.back-home-btn:hover {
+  background-color: #0056b3;
+}
+
 /* Contenedor principal */
 .profile-customer-container {
   background-color: #fff;
-  padding: 40px;
+  padding: 30px;
   border-radius: 10px;
   max-width: 800px;
-  margin: 40px auto;
+  width: 100%; /* Ocupa todo el ancho disponible */
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin-top: 80px; /* Separa del encabezado */
+  margin-bottom: 20px; /* Espaciado con el pie de página */
+  box-sizing: border-box;
 }
 
 /* Encabezado del perfil */
 .profile-header {
   display: flex;
   align-items: center;
+  justify-content: space-between; /* Espaciado entre los elementos */
+  flex-wrap: wrap; /* Ajusta en dispositivos pequeños */
   margin-bottom: 20px;
+}
 
-  .profile-image {
-    width: 100px;
-    height: 100px;
-    margin-right: 30px;
+.profile-image {
+  width: 100px;
+  height: 100px;
+  margin-right: 20px;
+  flex-shrink: 0; /* Mantiene el tamaño de la imagen fijo */
+}
 
-    img {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      object-fit: cover;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-    }
-  }
+.profile-image img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
 
-  .profile-info {
+.profile-info {
+  flex-grow: 1;
+  min-width: 250px; /* Evita que se haga demasiado pequeño en pantallas pequeñas */
+}
 
-    h2 {
-      font-size: 2rem;
-      margin: 0;
-      margin-bottom: 7px;
-      color: #333;
-    }
+.profile-info h2 {
+  font-size: 1.8rem;
+  margin: 0;
+  color: #333;
+}
 
-    .customer-description {
-      color: #666;
-      font-size: 1.1rem;
-      margin-bottom: 10px;
-    }
-
-    .edit-profile-btn {
-      padding: 10px 20px;
-      background-color: #007bff;
-      margin-right: 5px;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 1rem;
-      transition: background-color 0.3s ease;
-
-      &:hover {
-        background-color: darken(#007bff, 10%);
-      }
-    }
-    .contact-btn {
-      padding: 10px 20px;
-      background-color: #007bff;
-      margin-right: 5px;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 1rem;
-      transition: background-color 0.3s ease;
-      gap: 10px;
-
-      &:hover {
-        background-color: darken(#007bff, 10%);
-      }
-    }
-    /* boton de favoritos*/
-.view-favorites-btn {
-  padding: 10px 20px;  /* Mantener el tamaño adecuado */
-  background-color: rgb(255, 166, 32);
-  color: white;
+.profile-info button {
+  margin-top: 10px;
+  margin-right: 10px;
+  padding: 10px 15px;
+  font-size: 1rem;
   border: none;
   border-radius: 5px;
-  font-size: 1rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
+}
 
-  &:hover {
-    background-color: darken(rgb(255, 166, 32), 10%);
-      }
-    }
-  }
+.edit-profile-btn {
+  background-color: #007bff;
+  color: white;
+}
+
+.edit-profile-btn:hover {
+  background-color: #0056b3;
+}
+
+.contact-btn {
+  background-color: #007bff;
+  color: white;
+}
+
+.contact-btn:hover {
+  background-color: #0056b3;
+}
+
+.view-favorites-btn {
+  background-color: #ffa620;
+  color: white;
+}
+
+.view-favorites-btn:hover {
+  background-color: #cc8500;
 }
 
 /* Sección de proyectos */
 .projects-section {
-  h3 {
-    font-size: 1.5rem;
-    margin-bottom: 20px;
-    color: #333;
-  }
-
-  .create-project-btn {
-    padding: 10px 20px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1rem;
-    margin-bottom: 20px;
-    transition: background-color 0.3s ease;
-
-    &:hover {
-      background-color: darken(#28a745, 10%);
-    }
-  }
-
-  .projects-list {
-    list-style-type: none;
-    padding: 0;
-
-    li {
-      background-color: #f9f9f9;
-      padding: 15px;
-      margin-bottom: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      
-      h4 {
-        margin: 0;
-        color: #007bff;
-        font-size: 1.2rem;
-      }
-
-      p {
-        color: #666;
-        margin: 10px 0;
-      }
-
-      .view-project-btn {
-        padding: 8px 16px;
-        background-color: #28a745;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 1rem;
-        transition: background-color 0.3s ease;
-
-        &:hover {
-          background-color: darken(#28a745, 10%);
-        }
-      }
-    }
-  }
+  margin-top: 20px;
 }
 
+.projects-section h3 {
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.create-project-btn {
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-bottom: 20px;
+  transition: background-color 0.3s ease;
+  width: 100%; /* Asegura que sea ancho en móviles */
+  text-align: center;
+}
+
+.create-project-btn:hover {
+  background-color: #218838;
+}
+
+.projects-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.projects-list li {
+  background-color: #f9f9f9;
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.projects-list li h4 {
+  margin: 0;
+  color: #007bff;
+  font-size: 1.2rem;
+}
+
+.projects-list li p {
+  color: #666;
+  margin: 10px 0;
+}
+
+.view-project-btn {
+  padding: 8px 16px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.view-project-btn:hover {
+  background-color: #218838;
+}
 
 /* Ajustes responsivos */
 @media (max-width: 768px) {
@@ -190,14 +187,17 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
-
-    .profile-image {
-      margin-bottom: 20px;
-    }
   }
-.projects-section {
+
+  .profile-image {
+    margin-bottom: 20px;
+  }
+
   .create-project-btn {
-    width: 100%; /* Botón de crear proyecto ocupa todo el ancho en móviles */
-     }
+    width: 100%; /* Asegura que ocupe todo el ancho */
+  }
+
+  .projects-list li {
+    padding: 10px;
   }
 }

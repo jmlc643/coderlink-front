@@ -13,10 +13,10 @@
       <p><strong>Categoría:</strong> {{ project?.category }}</p>
       <p><strong>Calificación:</strong> {{ project?.qualification }}</p>
       <p><strong>Presupuesto:</strong> S/.{{project?.budget}}</p>
-      <div *ngIf="devName != ''"><p><strong>A cargo de:</strong> {{ devName }}</p></div>
+      <div *ngIf="devName !== ''"><p><strong>A cargo de:</strong> {{ devName }}</p></div>
     </div>
 
-    <div *ngIf="project?.postulations != []">
+    <div *ngIf="project?.postulations?.length && !devName">
       <h2>Postulaciones</h2>
     <div *ngFor = "let postulation of project?.postulations">
       <p><strong>ID de la postulación:</strong> {{ postulation.id }}</p>

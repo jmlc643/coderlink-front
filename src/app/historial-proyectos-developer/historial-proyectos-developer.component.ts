@@ -23,7 +23,7 @@ export class HistorialProyectosDeveloperComponent implements OnInit {
   projects: Project[] = []
   projectsWithAcceptedPostulations: Project[] = []
 
-  selectedValue: string = 'TODO';
+  selectedValue = 'TODO';
 
   setStatus: SetStatus = {
     id: 0,

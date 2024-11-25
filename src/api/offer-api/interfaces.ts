@@ -1,6 +1,7 @@
 import { Postulation } from "../postulation-api/interfaces"
 
 export interface JobOffer{
+    id: number
     budget : number,
     publicationDate : Date,
     postulation : Postulation

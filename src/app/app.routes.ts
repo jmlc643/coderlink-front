@@ -12,7 +12,6 @@ import { EditProfileCustomerComponent } from './edit-profile-customer/edit-profi
 import { CrearProyectoComponent } from './crear-proyecto/crear-proyecto.component';
 import { ModifyProjectComponent } from './modify-project/modify-project.component';
 import { ViewProjectComponent } from './view-project/view-project.component';
-import { HireDeveloperComponent } from './hire-developer/hire-developer.component';
 import { RegisterCustomerComponent } from './register-c/register-c.component';
 import { RevisarPortafoliosFreelancerComponent } from './revisar-portafolios-freelancer/revisar-portafolios-freelancer.component';
 import { HistorialProyectosComponent } from './historial-proyectos/historial-proyectos.component';
@@ -25,6 +24,7 @@ import { authGuard } from '../guards/auth/auth.guard';
 import { authInverseGuard } from '../guards/auth/auth-inverse.guard';
 import { developerGuard } from '../guards/developer/developer.guard';
 import { customerGuard } from '../guards/customer/customer.guard';
+import { ConfirmPaidComponent } from './confirm-paid/confirm-paid.component';
 
 
 export const routes: Routes = [
@@ -68,7 +68,7 @@ export const routes: Routes = [
       { path: 'historial-proyectos', component: HistorialProyectosComponent },
       { path: 'solicitar-cambios', component: SolicitarCambiosComponent },
       { path: 'ver-desarrolladores-favoritos', component: VerDesarrolladoresFavoritosComponent },
-      { path: 'hire-developer/:id', component: HireDeveloperComponent },
+      { path: 'confirm-paid', component: ConfirmPaidComponent}
     ],
   },
 
