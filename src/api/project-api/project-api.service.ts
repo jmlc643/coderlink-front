@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { lastValueFrom, Observable } from 'rxjs';
-import { CreateProjectRequest, Project, SearchProjectRequest, SetStatus } from './interfaces';
+import { AskChangesRequest, AskChangesResponse, CreateProjectRequest, Project, SearchProjectRequest, SetStatus } from './interfaces';
 import { environment } from '../../environments/environment.development';
 
 @Injectable({
@@ -33,5 +33,9 @@ export class ProjectApiService {
 
   setStatusProject(project: SetStatus){
     return lastValueFrom(this.httpClient.post<Project>(environment.urlBack+'/project/set-status/', project))
+  }
+
+  askChanges(request: AskChangesRequest){
+    return lastValueFrom(this.httpClient.post<AskChangesResponse>(`${environment.urlBack}/project/ask-changes/`, request))
   }
 }

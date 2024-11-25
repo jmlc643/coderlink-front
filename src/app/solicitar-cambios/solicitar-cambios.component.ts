@@ -1,38 +1,68 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AskChangesRequest, Project } from '../../api/project-api/interfaces';
+import { AuthApiService } from '../../api/auth-api/auth-api.service';
+import { ProjectApiService } from '../../api/project-api/project-api.service';
+import { NgIf } from '@angular/common';
 
 
 @Component({
   selector: 'app-solicitar-cambios',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, NgIf],
   templateUrl: './solicitar-cambios.component.html',
   styleUrl: './solicitar-cambios.component.scss'
 })
-export class SolicitarCambiosComponent {
+export class SolicitarCambiosComponent implements OnInit{
 
-  descripcion: string = '';
-  selectedFile: File | null = null;
+  descripcion = '';
+  mensajeConfirmacion = "";
 
-  constructor (private router: Router) {}
+  request: AskChangesRequest = {
+    customerName: '',
+    devName: '',
+    idProject: 0,
+    message: ''
+  }
 
-  // Handle file selection
-  onFileSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      this.selectedFile = input.files[0];
+  username = ""
+  devName = ""
+  idd = 0
+  project?: Project
+
+  router = inject(Router)
+  authApiService = inject(AuthApiService)
+  projectApiService = inject(ProjectApiService)
+  activatedRouter = inject(ActivatedRoute)
+
+  // Handle form submission
+
+  async ngOnInit() {
+    this.activatedRouter.params.subscribe( () => {
+      this.idd = +this.activatedRouter.snapshot.params['id'];
+    })
+    await this.loadData()
+  }
+
+  private async loadData(){
+    this.username = await this.authApiService.getUser()?.username as string
+    this.project = await this.projectApiService.getProject(this.idd)
+    const filteredPostulations = this.project?.postulations.filter(postulation => postulation.status == 'ACEPTED');
+    if (filteredPostulations && filteredPostulations.length > 0) {
+      // Asigna el nombre del desarrollador de la primera postulación que cumple la condición a 'devName'
+      this.devName = filteredPostulations[0].devName;
     }
   }
 
-  // Handle form submission
-  onSubmit(): void {
+  async onSubmit() {
     if (this.descripcion) {
-      console.log('Formulario enviado:');
-      console.log('Descripción:', this.descripcion);
-      console.log('Archivo:', this.selectedFile);
-      alert('Solicitud enviada con éxito.');
-      this.router.navigate(['/view-project']);
+      this.request.customerName = this.username
+      this.request.devName = this.devName
+      this.request.idProject = this.idd
+      this.request.message = this.descripcion
+      const response = await this.projectApiService.askChanges(this.request)
+      this.mensajeConfirmacion = response.message
     }
   }
 
@@ -40,7 +70,6 @@ export class SolicitarCambiosComponent {
   onCancel(): void {
     if (confirm('¿Estás seguro de que deseas cancelar la solicitud?')) {
       this.descripcion = '';
-      this.selectedFile = null;
       this.router.navigate(['/view-project']);
     }
   }

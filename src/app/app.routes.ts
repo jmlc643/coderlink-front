@@ -66,15 +66,15 @@ export const routes: Routes = [
       { path: 'crear-proyecto', component: CrearProyectoComponent },
       { path: 'modify-project/:id', component: ModifyProjectComponent },
       { path: 'historial-proyectos', component: HistorialProyectosComponent },
-      { path: 'solicitar-cambios', component: SolicitarCambiosComponent },
+      { path: 'solicitar-cambios/:id', component: SolicitarCambiosComponent },
       { path: 'ver-desarrolladores-favoritos', component: VerDesarrolladoresFavoritosComponent },
-      { path: 'confirm-paid', component: ConfirmPaidComponent}
+      { path: 'confirm-paid', component: ConfirmPaidComponent},
+      { path: 'view-project/:id', component: ViewProjectComponent },
     ],
   },
 
   // Rutas comunes
   { path: 'project-section', loadComponent: () => import('./project-section/project-section.component').then(m => m.ProjectSectionComponent) },
-  { path: 'view-project/:id', component: ViewProjectComponent },
   { path: 'revisar-portafolios-freelancer/:username', component: RevisarPortafoliosFreelancerComponent },
 
   // Redirección y rutas no encontradas

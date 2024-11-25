@@ -34,3 +34,14 @@ export interface SetStatus{
     id: number
     status: string
 }
+
+export interface AskChangesRequest {
+    customerName: string
+    devName: string
+    idProject: number
+    message: string
+}
+
+export interface AskChangesResponse {
+    message: string
+}
