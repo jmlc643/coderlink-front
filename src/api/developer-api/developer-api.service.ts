@@ -30,4 +30,8 @@ export class DeveloperApiService {
   updateCustomer(updateDeveloper: UpdateDeveloper, username: string){
     return lastValueFrom(this.httpClient.put<Developer>(`${environment.urlBack}/developer/edit-developer/${username}`, updateDeveloper))
   }
+
+  filterDeveloperBySkills(skills: string[]){
+    return lastValueFrom(this.httpClient.post<Developer[]>(`${environment.urlBack}/developer/filter-developers/`, skills))
+  }
 }

@@ -5,14 +5,22 @@
     </div>
     <div class="search-bar">
       <input type="text" placeholder="Buscar Freelancers" />
-      <button class="filter-btn" (click)="filterFreelancers()">Filtrar</button>
-      <select class="sort-dropdown">
-        <option value="skills">Habilidades</option>
-        <option value="Experience">Experiencia</option>
-        <option value="fee">Tarifa</option>
-      </select>
     </div>
   </header>
+
+  <div class="main-content">
+    <aside class="filter-sidebar">
+      <h3>Filtrar por:</h3>
+      <div class="filter-category">
+        <h4>Habilidades</h4>
+        <ul>
+          <li *ngFor="let item of items">
+            <input type="checkbox" [(ngModel)]="item.selected" /> {{ item.name }}
+          </li>
+        </ul>
+      </div>
+      <button class="apply-filters-btn" (click)="applyFilters()">Aplicar Filtros</button>
+      </aside>
 
   <!-- Main Content -->
   <div class="main-content">
@@ -26,7 +34,7 @@
           <div class="freelancer-img">
             <img src="icons/desarrollador2.png" alt="Freelancer Profile" />
           </div>
-          <div *ngFor="let freelancer of freelancers">
+          <div>
             <div class="freelancer-info">
               <h3>{{ freelancer.names }} {{freelancer.lastNames}}</h3>
               <p>{{ freelancer.workExperience }}</p>

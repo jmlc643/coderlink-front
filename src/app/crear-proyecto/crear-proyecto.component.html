@@ -68,7 +68,7 @@
           <small *ngIf="proyectoForm.get('tarifa')?.errors?.['min']">La tarifa debe ser mayor a 0.</small>
         </div>
 
-      <div *ngIf="formError != ''">
+      <div *ngIf="formError !== ''">
         <p class="text-danger text-xs italic">{{formError}}</p>
       </div>
       

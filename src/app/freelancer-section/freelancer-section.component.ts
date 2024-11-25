@@ -21,8 +21,19 @@ export class FreelancerSectionComponent implements OnInit{
   freelancerApiService = inject(DeveloperApiService);
   authApiService = inject(AuthApiService)
   customerApiService = inject(CustomerApiService)
+  developerApiService = inject(DeveloperApiService)
   freelancers: Developer[] = [];
   favorites: Developer[] = [];
+
+  items = [
+    { name: 'Java', selected: false },
+    { name: 'C++', selected: false },
+    { name: 'C#', selected: false },
+    { name: 'Python', selected: false },
+    { name: 'HTML', selected: false },
+    { name: 'JavaScript', selected: false }
+  ];
+
 
   async ngOnInit() {
       await this.loadData()
@@ -59,8 +70,15 @@ export class FreelancerSectionComponent implements OnInit{
   }
 
   // Método para manejar el filtrado (ejemplo simple)
-  filterFreelancers() {
-    //
+  async applyFilters() {
+    const selectedItems = this.items
+      .filter(item => item.selected)
+      .map(item => item.name);
+    if(selectedItems.length > 0){
+      this.freelancers = await this.developerApiService.filterDeveloperBySkills(selectedItems)
+    } else {
+      this.freelancers = await this.developerApiService.listDevelopers()
+    }
   }
 
   // Método para ver el perfil del freelancer
