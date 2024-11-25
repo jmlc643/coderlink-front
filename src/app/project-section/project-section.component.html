@@ -18,6 +18,7 @@
           <span>Categoría: {{ project.category }}</span>
           <br>
           <span>Calificación: {{ project.qualification }}</span>
+          <span>Presupuesto: $ {{project.budget}}</span>
         </div>
         <button 
         *ngIf="username.role === '[ROLE_DEVELOPER]'" 
