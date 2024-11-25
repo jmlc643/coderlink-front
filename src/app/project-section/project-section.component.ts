@@ -37,6 +37,7 @@ export class ProjectSectionComponent implements OnInit{
     devName: '',
     idProject: 0
   }
+  devName = ""
   
   async ngOnInit() {
     await this.loadData()
@@ -83,5 +84,19 @@ export class ProjectSectionComponent implements OnInit{
     this.createPostulationRequest.idProject = id
     this.postulationApiService.createPostulation(this.createPostulationRequest)
     this.router.navigateByUrl('/')
+  }
+
+  postulado(project: Project): boolean{
+    if(this.username.role == '[ROLE_DEVELOPER]'){
+      this.devName = this.username.username
+    }
+
+    const resultado = project.postulations.some(postulation => 
+      postulation.devName === this.devName
+    )
+
+    console.log(resultado)
+
+    return resultado;
   }
 }

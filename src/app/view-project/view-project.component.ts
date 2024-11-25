@@ -95,5 +95,6 @@ export class ViewProjectComponent implements OnInit{
       const order = await this.paymentApiService.createOrder(createOrder)
       window.location.href = order.paypalUrl;
   }
+
 }
 
