@@ -118,7 +118,7 @@ export class RegisterFreelancerComponent {
         next: (userData) => {
           console.log(userData)
         },
-        error : (errorData: any) => {
+        error : (errorData) => {
           console.error(errorData);
           if (errorData && errorData.error && errorData.error.message) {
             // If error has a message, you can show it

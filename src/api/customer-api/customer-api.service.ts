@@ -1,9 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { BehaviorSubject, lastValueFrom, Observable } from 'rxjs';
+import { lastValueFrom, Observable } from 'rxjs';
 import { Customer, UpdateCustomer } from './interfaces';
 import { environment } from '../../environments/environment.development';
-import { AuthResponse } from '../storage-service/interfaces';
 
 @Injectable({
   providedIn: 'root'

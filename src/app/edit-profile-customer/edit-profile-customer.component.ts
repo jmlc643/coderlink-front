@@ -5,8 +5,6 @@ import { CustomerApiService } from '../../api/customer-api/customer-api.service'
 import { NgIf } from '@angular/common';
 import { UpdateCustomer } from '../../api/customer-api/interfaces';
 import { AuthApiService } from '../../api/auth-api/auth-api.service';
-import { StorageService } from '../../api/storage-service/storage.service';
-import { AuthResponse } from '../../api/storage-service/interfaces';
 
 @Component({
   selector: 'app-edit-profile-customer',
@@ -92,10 +90,10 @@ export class EditProfileCustomerComponent implements OnInit{
 
     // Verifica el código ingresado
     this.customerApiService.verifyEmailCode(email as string, this.verificationCode).subscribe({
-      complete: () => {
+      complete: async () => {
         console.log('Correo verificado correctamente');
         this.closeModal();
-        this.customerApiService.updateCustomer(formData as UpdateCustomer, this.user)
+        await this.customerApiService.updateCustomer(formData as UpdateCustomer, this.user)
         this.authApiService.logout()
         this.router.navigate(['/login']).then(() => {
           window.location.reload()

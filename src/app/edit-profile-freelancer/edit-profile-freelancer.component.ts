@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DeveloperApiService } from '../../api/developer-api/developer-api.service';
 import { NgIf } from '@angular/common';
@@ -103,10 +103,9 @@ export class EditProfileFreelancerComponent implements OnInit{
 
     // Verifica el código ingresado
     this.developerApiService.verifyEmailCode(email as string, this.verificationCode).subscribe({
-      complete: () => {
-        console.log('Correo verificado correctamente');
+      complete: async () => {
         this.closeModal();
-        this.developerApiService.updateCustomer(formData as UpdateDeveloper, this.user)
+        await this.developerApiService.updateCustomer(formData as UpdateDeveloper, this.user)
         this.authApiService.logout()
         this.router.navigate(['/login']).then(() => {
           window.location.reload()
